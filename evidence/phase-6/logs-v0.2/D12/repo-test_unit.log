@@ -1,0 +1,19 @@
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+..F......................                                                [100%]
+=================================== FAILURES ===================================
+______________________ test_quantity_discount_thresholds _______________________
+
+    def test_quantity_discount_thresholds():
+        assert quantity_discount(9) == D("0")
+        assert quantity_discount(10) == D("0.05")
+        assert quantity_discount(49) == D("0.05")
+>       assert quantity_discount(50) == D("0.12")
+E       AssertionError: assert Decimal('0.05') == Decimal('0.12')
+E        +  where Decimal('0.05') = quantity_discount(50)
+E        +  and   Decimal('0.12') = D('0.12')
+
+tests/test_pricing.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_quantity_discount_thresholds - AssertionEr...
+1 failed, 24 passed, 4 deselected in 0.44s
+task: Failed to run task "test:unit": exit status 1

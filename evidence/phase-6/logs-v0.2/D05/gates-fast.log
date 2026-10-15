@@ -1,0 +1,17 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D05/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 1 finding(s), 1 blocking | {"base": "890f7797c930", "test_files_compared": 1}
+   [BLOCK] test-integrity.test-skipped (high) tests/test_validation.py:31 — test test_invalid_requests is now skipped/xfail
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D05/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 2, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D05/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 2, "lines": 10, "scope": ["quotesvc/validation.py"]}
+
+=== gates:fast FAILED: test-tamper in 2.95s [test-tamper 0.4s rc=1] [dep-check 0.34s rc=0] [semgrep-changed 2.01s rc=0] [scope-check 0.2s rc=0]
+task: Failed to run task "gates:fast": exit status 1

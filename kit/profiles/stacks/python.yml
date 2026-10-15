@@ -1,0 +1,27 @@
+# Python stack. VERIFIED in this research on the sample service (phase-6).
+name: python
+verified: true
+detect: [pyproject.toml, requirements.txt, setup.py]
+ecosystem: pypi
+tools:                                    # minimum versions the kit was verified with (none are installed by the kit)
+  python: "3.11"
+  semgrep: "1.178.0"
+  coverage: "7.0"
+  pytest: "8.0"
+env:
+  GATES_TEST_CMD: python3 -m pytest -x -q -p no:cacheprovider
+  GATES_COVERAGE_CMD: python3 -m coverage run --branch -m pytest -q -p no:cacheprovider && python3 -m coverage json -q -o "$GATES_COV_JSON"
+  GATES_MUTATION_CMD: ""                  # empty = built-in diff-scoped AST mutation (checks/diff_mutation.py)
+  GATES_MUT_MAX: "20"
+  GATES_MUT_MIN_MUTANTS: "4"
+  GATES_MUT_MIN_SCORE: "0.6"
+  GATES_MUT_BUDGET_S: "240"
+  GATES_MUT_EXECUTED_ONLY: "1"            # v0.2: mutate only added lines the tests execute
+  GATES_COV_MAX_DROP: "0.5"
+  GATES_DIFF_COV_MIN: "0.7"
+  GATES_DEP_MIN_AGE_DAYS: "30"
+  GATES_DEP_COOLDOWN_DAYS: "7"
+checks:
+  fast: [test-tamper, dep-check, semgrep-changed, scope-check]
+  deterministic: [test-tamper, dep-check, semgrep, scope-check, licence-check, dup-check, coverage-drop]
+  server: [diff-mutation, llm-review]

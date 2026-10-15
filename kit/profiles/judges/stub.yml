@@ -1,0 +1,27 @@
+# Deterministic offline stub judge. Exercises the whole review pipeline with no model, no network, no GPU.
+# Numbers measured with it describe the PIPELINE (parsing, grounding, voting, verify, floors), never model quality.
+name: stub
+provider: stub
+tier: none
+min_vram_gb: 0
+min_ram_gb: 1
+context_tokens: 8192
+chars_per_token: 3.2
+concurrency: 1
+params:
+  temperature: 0
+  max_tokens: 1024
+prompts: [find-correctness, find-security, find-test-integrity, find-test-adequacy, find-scope]
+samples: 3
+min_votes: 2
+verify: true
+max_findings_to_verify: 8
+repair_attempts: 1
+min_confidence: 0.6
+min_severity: medium
+blocking_categories: []
+task_trusted: false
+budget_s: 60
+max_chunks: 6
+layers: [L2, L3]
+fail_on_error: false

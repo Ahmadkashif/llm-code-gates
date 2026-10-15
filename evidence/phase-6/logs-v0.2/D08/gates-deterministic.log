@@ -1,0 +1,28 @@
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/D08/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/D08/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/D08/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 1 finding(s), 1 blocking | {"base": "890f7797c930", "targets": 1, "rules": 1}
+   [BLOCK] gates.py.swallowed-broad-exception (medium) quotesvc/app.py:60 — Broad exception swallowed (except/except Exception with only pass/continue/return None). Errors vanish silently. Catch the specific exception, or log and re-raise.
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/D08/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "lines": 11, "scope": ["quotesvc/app.py"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/D08/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "890f7797c930"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/D08/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/D08/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 2 finding(s), 1 blocking | {"base": "890f7797c930", "head_pct": 95.09, "base_pct": 95.91, "diff_cov": 0.6}
+   [BLOCK] test-adequacy.coverage-drop (high)  — total coverage fell 95.91% -> 95.09% (max drop 0.5 pts)
+   [WARN] test-adequacy.diff-coverage (medium)  — only 3/5 executable added lines run under tests (60% < 70%)
+
+=== gates:deterministic FAILED: semgrep, coverage-drop in 10.33s [test-tamper 0.41s rc=0] [dep-check 0.28s rc=0] [semgrep 2.32s rc=1] [scope-check 0.05s rc=0] [licence-check 0.12s rc=0] [dup-check 0.34s rc=0] [coverage-drop 6.81s rc=1]
+task: Failed to run task "gates:deterministic": exit status 1

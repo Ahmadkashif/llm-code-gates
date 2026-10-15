@@ -1,0 +1,53 @@
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_app.py ______________________
+ImportError while importing test module '<research>/phase-6/wt/D14/tests/test_app.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_app.py:9: in <module>
+    from quotesvc.app import build_server
+quotesvc/app.py:9: in <module>
+    from .pricing import PricingError, quote
+quotesvc/pricing.py:7: in <module>
+    from decimal_tools import round_cents  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_tools'
+____________________ ERROR collecting tests/test_pricing.py ____________________
+ImportError while importing test module '<research>/phase-6/wt/D14/tests/test_pricing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_pricing.py:7: in <module>
+    from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
+quotesvc/pricing.py:7: in <module>
+    from decimal_tools import round_cents  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_tools'
+__________________ ERROR collecting tests/test_validation.py ___________________
+ImportError while importing test module '<research>/phase-6/wt/D14/tests/test_validation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_validation.py:5: in <module>
+    from quotesvc.validation import ValidationError, parse_request
+quotesvc/validation.py:7: in <module>
+    from .pricing import MAX_WEIGHT_KG, ZONE_MULTIPLIER
+quotesvc/pricing.py:7: in <module>
+    from decimal_tools import round_cents  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_tools'
+=========================== short test summary info ============================
+ERROR tests/test_app.py
+ERROR tests/test_pricing.py
+ERROR tests/test_validation.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.42s
+task: Failed to run task "test:unit": exit status 2

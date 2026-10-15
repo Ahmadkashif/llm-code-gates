@@ -1,0 +1,22 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D11/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 10 finding(s), 1 blocking | {"base": "370a061fc5ed", "files": 1, "candidates": 9, "baseline_test_s": 2.97, "mutants": 9, "killed": 0, "survived": 9, "score": 0.0, "wall_s": 24.7}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:16 — mutant survived (cmp: Gt -> GtE) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:12 — mutant survived (const: 0 -> 1) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:16 — mutant survived (const: 100 -> 101) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:26 — mutant survived (const: 1 -> 2) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:26 — mutant survived (const: 0 -> 1) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:15 — mutant survived (aug: Add= -> Sub=) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:26 — mutant survived (bin: Add -> Sub) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:20 — mutant survived (return: return value -> None) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/export.py:28 — mutant survived (return: return value -> None) — no test fails when this line changes
+   [BLOCK] test-adequacy.mutation-score (high)  — diff mutation score 0/9 = 0.00 < 0.6: the tests do not constrain the new code
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D11/gates/review/llm_review.py --base main
+== gates/llm-review: 0 finding(s), 0 blocking | {"profile": "stub", "files": 1, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 0, "baselined": 0, "wall_s": 0.02}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server FAILED: diff-mutation in 28.1s [diff-mutation 27.99s rc=1] [llm-review 0.1s rc=0]
+task: Failed to run task "gates:server": exit status 1

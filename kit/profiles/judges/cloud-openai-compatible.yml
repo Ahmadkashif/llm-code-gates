@@ -1,0 +1,38 @@
+# Frontier cloud model via any OpenAI-compatible endpoint. CODE LEAVES THE MACHINE: enable only for repositories
+# whose owner approved sending them to that provider. Key from env / 0600 file. NOT RUN in this research.
+name: cloud-openai-compatible
+provider: openai-compatible
+tier: frontier
+base_url_env: GATES_JUDGE_BASE_URL
+base_url: ""
+model_env: GATES_JUDGE_MODEL
+model: ""
+api_key_env: GATES_JUDGE_API_KEY
+api_key_required: true
+min_vram_gb: 0
+min_ram_gb: 1
+context_tokens: 32768                    # budget, not the model maximum: diff-only context worked better (SWE-PRBench)
+chars_per_token: 3.2
+concurrency: 1
+timeout_s: 180
+retries: 2
+response_format: json_object
+params:
+  temperature: 0.2
+  max_tokens: 2048
+extra_body: {}
+prompts: [find-correctness, find-security, find-test-integrity, find-test-adequacy, find-scope]
+samples: 3
+min_votes: 2
+verify: true
+max_findings_to_verify: 8
+repair_attempts: 1
+min_confidence: 0.6
+min_severity: medium
+blocking_categories: []
+task_trusted: false
+budget_s: 540
+max_chunks: 8
+layers: [L3]
+fail_on_error: false
+data_leaves_host: true

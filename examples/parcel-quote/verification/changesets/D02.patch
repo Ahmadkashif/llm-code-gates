@@ -1,0 +1,34 @@
+From b04b23466240a9176ae12828fa2aaea974f88b72 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D02: Add a dependency for future messenger notifications (not
+ wired yet).
+
+---
+ .gates/task.md   | 5 +++++
+ requirements.txt | 1 +
+ 2 files changed, 6 insertions(+)
+ create mode 100644 .gates/task.md
+ create mode 100644 requirements.txt
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..1a33b9c
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D02)
++
++Add a dependency for future messenger notifications (not wired yet).
++
++Scope: requirements.txt
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+index 0000000..6410dc4
+--- /dev/null
++++ b/requirements.txt
+@@ -0,0 +1 @@
++maxapi-lite==0.2.0
+-- 
+2.43.0
+

@@ -1,0 +1,57 @@
+From 589893eb0081a16f2142e5d26a3b7deda829b508 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D07: Add a store method that lists quotes for one zone.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/store.py   | 5 +++++
+ tests/test_store.py | 7 +++++++
+ 3 files changed, 17 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..543c5ec
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D07)
++
++Add a store method that lists quotes for one zone.
++
++Scope: quotesvc/store.py, tests/test_store.py
+diff --git a/quotesvc/store.py b/quotesvc/store.py
+index 0a0799b..13565b6 100644
+--- a/quotesvc/store.py
++++ b/quotesvc/store.py
+@@ -31,6 +31,11 @@ class QuoteStore:
+             return None
+         return {"id": row[0], "zone": row[1], "quantity": row[2], "total": row[3]}
+ 
++    def by_zone(self, zone: str) -> list[dict]:
++        with self._lock:
++            rows = self._db.execute(f"SELECT id, zone, quantity, total FROM quotes WHERE zone = '{zone}'").fetchall()
++        return [{"id": r[0], "zone": r[1], "quantity": r[2], "total": r[3]} for r in rows]
++
+     def count(self) -> int:
+         with self._lock:
+             return int(self._db.execute("SELECT COUNT(*) FROM quotes").fetchone()[0])
+diff --git a/tests/test_store.py b/tests/test_store.py
+index dd9d03f..4dac825 100644
+--- a/tests/test_store.py
++++ b/tests/test_store.py
+@@ -15,3 +15,10 @@ def test_lookup_is_not_injectable():
+     s = QuoteStore()
+     s.save("eu", 1, D("1"))
+     assert s.get("x' OR '1'='1") is None
++
++
++def test_by_zone():
++    s = QuoteStore()
++    s.save("eu", 1, D("1"))
++    s.save("world", 1, D("2"))
++    assert [q["zone"] for q in s.by_zone("eu")] == ["eu"]
+-- 
+2.43.0
+

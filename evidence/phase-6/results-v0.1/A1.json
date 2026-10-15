@@ -1,0 +1,169 @@
+{
+ "id": "A1",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 4.13
+  },
+  "check": {
+   "rc": 0,
+   "wall_s": 24.35
+  },
+  "ci": {
+   "rc": 0,
+   "wall_s": 50.71
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 3.17,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.32,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.19,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.23,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 0,
+   "wall_s": 11.75,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.54,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.37,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.23,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.3,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.36,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 7.64,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 24.2,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 23.51,
+     "findings": []
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.2,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.52
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.37
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.82
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.55
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.92
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 3.33
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.27,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.16,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

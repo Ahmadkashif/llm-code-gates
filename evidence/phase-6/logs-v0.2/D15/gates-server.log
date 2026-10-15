@@ -1,0 +1,15 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D15/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 3 finding(s), 1 blocking | {"base": "890f7797c930", "files": 1, "candidates": 4, "baseline_test_s": 2.95, "unexecuted_candidates": 0, "mutants": 4, "killed": 2, "survived": 2, "score": 0.5, "wall_s": 10.8}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:45 — mutant survived (cmp: LtE -> Lt) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:48 — mutant survived (cmp: LtE -> Lt) — no test fails when this line changes
+   [BLOCK] test-adequacy.mutation-score (high)  — diff mutation score 2/4 = 0.50 < 0.6: the tests do not constrain the new code
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D15/gates/review/llm_review.py --base main
+== gates/llm-review: 0 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 0, "baselined": 0, "wall_s": 0.02}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server FAILED: diff-mutation in 17.42s [diff-mutation 17.34s rc=1] [llm-review 0.08s rc=0]
+task: Failed to run task "gates:server": exit status 1

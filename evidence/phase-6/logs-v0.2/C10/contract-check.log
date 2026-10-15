@@ -1,0 +1,49 @@
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 6 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.43s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: [build] python3 -m compileall -q quotesvc
+task: [secrets] gitleaks git --redact --no-banner --log-opts='main..HEAD'
+[90m2:56PM[0m [32mINF[0m [1m1 commits scanned.[0m
+[90m2:56PM[0m [32mINF[0m [1mscanned ~272 bytes (272 bytes) in 447ms[0m
+[90m2:56PM[0m [32mINF[0m [1mno leaks found[0m
+task: [audit] osv-scanner scan source --lockfile requirements.txt:requirements-dev.txt
+Starting filesystem walk for root: /
+Scanned <research>/phase-6/wt/C10/requirements-dev.txt file and found 6 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 268.858µs elapsed, 268.905µs wall time
+
+No issues found
+task: [sast] semgrep scan --config .semgrep/ --error --metrics=off --quiet --disable-version-check --exclude gates
+task: [workflows] actionlint -config-file .github/actionlint.yaml .forgejo/workflows/*.yml
+task: [workflows] zizmor --offline .forgejo/workflows/*.yml
+ INFO zizmor: 🌈 zizmor v1.30.1
+ INFO audit: zizmor: 🌈 completed .forgejo/workflows/pipeline.yml
+No findings to report. Good job! (2 suppressed)
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/C10/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/C10/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/C10/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/C10/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "lines": 16, "scope": ["quotesvc/validation.py"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/C10/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "890f7797c930"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/C10/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/C10/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 0 finding(s), 0 blocking | {"base": "890f7797c930", "head_pct": 96.0, "base_pct": 95.91, "diff_cov": 1.0}
+
+=== gates:deterministic passed in 11.1s [test-tamper 0.28s rc=0] [dep-check 0.47s rc=0] [semgrep 2.53s rc=0] [scope-check 0.07s rc=0] [licence-check 0.37s rc=0] [dup-check 0.25s rc=0] [coverage-drop 7.14s rc=0]

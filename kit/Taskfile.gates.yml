@@ -1,0 +1,60 @@
+# llm-code-gates — namespaced quality-gate tasks. They never replace the repo's contract tasks; the contract tasks
+# call them. Add to the repo's Taskfile.yml (no contract task renamed):
+#
+#   includes:
+#     gates:
+#       taskfile: ./gates/Taskfile.gates.yml
+#       dir: .
+#       vars: {BASE_REF: '{{.BASE_REF}}'}
+#   tasks:
+#     check:fast: { cmds: [ ...existing..., task: gates:fast ] }          # L0 agent hook, < 60 s
+#     check:      { cmds: [ ...existing..., task: gates:deterministic ] } # L2 pre-push, < 2 min
+#     ci:         { cmds: [ task: check, ...existing..., task: gates:server ] }   # L3, < 10 min
+version: "3"
+
+vars:
+  BASE_REF: '{{.BASE_REF | default "origin/main"}}'
+  GATES_DIR: '{{.GATES_DIR | default "gates"}}'
+  GATES_PY: '{{.GATES_PY | default "python3"}}'
+
+tasks:
+  fast:
+    desc: "L0: test tampering, dependency existence/age, Semgrep on changed files, scope (deterministic, no model)"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/run.py fast --base {{.BASE_REF}}'
+
+  deterministic:
+    desc: "L2: fast + full vendored Semgrep, licence markers, duplication, coverage drop vs BASE_REF"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/run.py deterministic --base {{.BASE_REF}}'
+
+  mutation:
+    desc: "L3: diff-scoped mutation testing (capped, niced)"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/run.py diff-mutation --base {{.BASE_REF}}'
+
+  llm-review:
+    desc: "L3: advisory LLM review (judge profile in .gates/judge.json); exits 0 unless a category was promoted"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/run.py llm-review --base {{.BASE_REF}}'
+
+  server:
+    desc: "L3: mutation + advisory LLM review (what `ci` adds on top of `check`)"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/run.py server --base {{.BASE_REF}}'
+
+  report:
+    desc: Print the human summaries of the last run (job-log friendly)
+    cmds:
+      - 'cat .gates/out/llm-review.md 2>/dev/null || true'
+      - 'cat .gates/out/summary-*.json 2>/dev/null || true'
+
+  selftest:
+    desc: Run the kit's own tests (offline; stub judge + mock endpoint)
+    cmds:
+      - '{{.GATES_PY}} -m unittest discover -s {{.GATES_DIR}}/tests -t {{.GATES_DIR}} -q'
+
+  render:
+    desc: "Render .gates/ for a stack + judge profile, e.g. task gates:render STACK=python JUDGE=stub"
+    cmds:
+      - '{{.GATES_PY}} {{.GATES_DIR}}/render.py --stack {{.STACK | default "python"}} --judge {{.JUDGE | default "stub"}}'

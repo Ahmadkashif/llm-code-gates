@@ -1,0 +1,39 @@
+# 30B-120B open-weight model on a 48-96 GB GPU (e.g. gpt-oss-120b MXFP4 ~65 GB, qwen3-coder-30b-a3b Q4 ~19 GB,
+# llama-3.3-70b Q4 ~43 GB) behind vLLM/Ollama with an OpenAI-compatible API. Evidence-only tier in this research:
+# no such endpoint was available, so this profile is NOT VERIFIED (phase-6 / STATUS.md).
+name: local-48gb-plus
+provider: openai-compatible
+tier: large
+base_url_env: GATES_JUDGE_BASE_URL
+base_url: ""
+model_env: GATES_JUDGE_MODEL
+model: gpt-oss-120b
+api_key_env: GATES_JUDGE_API_KEY
+api_key_required: true
+ca_file_env: GATES_JUDGE_CA_FILE
+min_vram_gb: 48
+min_ram_gb: 64
+context_tokens: 32768
+chars_per_token: 3.2
+concurrency: 1
+timeout_s: 180
+retries: 2
+response_format: json_schema             # vLLM structured outputs / Ollama format
+params:
+  temperature: 0.2
+  max_tokens: 2048
+extra_body: {}
+prompts: [find-correctness, find-security, find-test-integrity, find-test-adequacy, find-scope]
+samples: 3
+min_votes: 2
+verify: true
+max_findings_to_verify: 8
+repair_attempts: 1
+min_confidence: 0.6
+min_severity: medium
+blocking_categories: []                  # promote a category only after >= 90% measured precision (README)
+task_trusted: false
+budget_s: 540
+max_chunks: 6
+layers: [L3]
+fail_on_error: false

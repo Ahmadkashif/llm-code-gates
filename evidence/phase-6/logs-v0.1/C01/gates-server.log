@@ -1,0 +1,11 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/C01/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "candidates": 3, "baseline_test_s": 2.95, "mutants": 3, "killed": 3, "survived": 0, "score": 1.0, "wall_s": 5.0}
+
+--- gates:server -> llm-review: <research>/phase-6/wt/C01/gates/review/llm_review.py --base main
+== gates/llm-review: 0 finding(s), 0 blocking | {"profile": "stub", "files": 1, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 0, "baselined": 0, "wall_s": 0.02}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 8.51s [diff-mutation 8.35s rc=0] [llm-review 0.16s rc=0]

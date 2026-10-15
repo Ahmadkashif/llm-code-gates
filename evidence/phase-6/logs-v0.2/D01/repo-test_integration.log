@@ -1,0 +1,53 @@
+task: [test:integration] python3 -m pytest -m integration
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_app.py ______________________
+ImportError while importing test module '<research>/phase-6/wt/D01/tests/test_app.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_app.py:9: in <module>
+    from quotesvc.app import build_server
+quotesvc/app.py:9: in <module>
+    from .pricing import PricingError, quote
+quotesvc/pricing.py:7: in <module>
+    from pyquote_currency_utils import format_money  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'pyquote_currency_utils'
+____________________ ERROR collecting tests/test_pricing.py ____________________
+ImportError while importing test module '<research>/phase-6/wt/D01/tests/test_pricing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_pricing.py:7: in <module>
+    from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
+quotesvc/pricing.py:7: in <module>
+    from pyquote_currency_utils import format_money  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'pyquote_currency_utils'
+__________________ ERROR collecting tests/test_validation.py ___________________
+ImportError while importing test module '<research>/phase-6/wt/D01/tests/test_validation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_validation.py:5: in <module>
+    from quotesvc.validation import ValidationError, parse_request
+quotesvc/validation.py:7: in <module>
+    from .pricing import MAX_WEIGHT_KG, ZONE_MULTIPLIER
+quotesvc/pricing.py:7: in <module>
+    from pyquote_currency_utils import format_money  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'pyquote_currency_utils'
+=========================== short test summary info ============================
+ERROR tests/test_app.py
+ERROR tests/test_pricing.py
+ERROR tests/test_validation.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+5 deselected, 3 errors in 0.21s
+task: Failed to run task "test:integration": exit status 2

@@ -1,0 +1,16 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D14/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 0}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D14/gates/checks/dep_check.py --base main
+== gates/dep-check: 1 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+   [WARN] dependency.undeclared-import (medium) quotesvc/pricing.py:7 — import 'decimal_tools' is not stdlib, not a local module and not a declared dependency
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 1, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D14/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "lines": 7, "scope": ["quotesvc/pricing.py"]}
+
+=== gates:fast passed in 2.88s [test-tamper 0.4s rc=0] [dep-check 0.28s rc=0] [semgrep-changed 2.06s rc=0] [scope-check 0.14s rc=0]

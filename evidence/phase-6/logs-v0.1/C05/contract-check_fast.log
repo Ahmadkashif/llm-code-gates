@@ -1,0 +1,22 @@
+task: [check:fast] [ -z "tests/test_pricing.py " ] || python3 -m ruff check tests/test_pricing.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+............................                                             [100%]
+28 passed, 4 deselected in 0.26s
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/C05/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "test_files_compared": 1}
+   [BLOCK] test-integrity.assertions-removed (high) tests/test_pricing.py:11 — test test_band_boundaries_are_inclusive: assertions 4 -> 1
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/C05/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 1, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/C05/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "lines": 13, "scope": ["tests/test_pricing.py"]}
+
+=== gates:fast FAILED: test-tamper in 3.01s [test-tamper 0.23s rc=1] [dep-check 0.34s rc=0] [semgrep-changed 2.14s rc=0] [scope-check 0.31s rc=0]
+task: Failed to run task "check:fast": task: Failed to run task "gates:fast": exit status 1

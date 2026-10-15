@@ -1,0 +1,85 @@
+From 46166d682b62548d5e5256cd70545f508fdec2c2 Mon Sep 17 00:00:00 2001
+From: agent-session <agent@example.invalid>
+Date: Thu, 15 Oct 2026 13:16:19 +0500
+Subject: [PATCH] A2: Reject quotes whose total exceeds 10000.00 with HTTP 422
+ 'total too large'. (agent session)
+
+---
+ .gates/task.md        | 5 +++++
+ quotesvc/pricing.py   | 6 +++++-
+ tests/test_app.py     | 6 ++++++
+ tests/test_pricing.py | 8 ++++++++
+ 4 files changed, 24 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..5d1655a
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (A2, produced by a headless Claude Code session, model haiku)
++
++Reject quotes whose total exceeds 10000.00 with HTTP 422 'total too large'.
++
++Scope: quotesvc/pricing.py, quotesvc/app.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..4849621 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -14,6 +14,7 @@ WEIGHT_BANDS: list[tuple[Decimal, Decimal]] = [
+ ZONE_MULTIPLIER = {"domestic": Decimal("1.00"), "eu": Decimal("1.60"), "world": Decimal("2.75")}
+ PROMO_CODES = {"WELCOME10": Decimal("0.10"), "BULK5": Decimal("0.05")}
+ MAX_WEIGHT_KG = WEIGHT_BANDS[-1][0]
++MAX_TOTAL = Decimal("10000.00")
+ CENT = Decimal("0.01")
+ 
+ 
+@@ -62,4 +63,7 @@ def quote(weight_kg: Decimal, zone: str, quantity: int = 1, promo: str | None =
+             raise PricingError("unknown promo code")
+         rate = max(rate, PROMO_CODES[promo])  # discounts do not stack: the larger one wins
+     discount = (subtotal * rate).quantize(CENT, ROUND_HALF_UP)
+-    return Quote(unit, quantity, subtotal, discount, subtotal - discount)
++    total = subtotal - discount
++    if total > MAX_TOTAL:
++        raise PricingError("total too large")
++    return Quote(unit, quantity, subtotal, discount, total)
+diff --git a/tests/test_app.py b/tests/test_app.py
+index fa0f315..5f5517f 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -51,6 +51,12 @@ def test_validation_error(base_url):
+     assert body["field"] == "weight_kg"
+ 
+ 
++def test_total_over_limit_is_422(base_url):
++    code, body = call(base_url + "/v1/quote", {"weight_kg": 30, "zone": "world", "quantity": 500})
++    assert code == 422
++    assert body == {"error": "total too large"}
++
++
+ def test_rate_limit():
+     srv = build_server(limiter=TokenBucket(rate_per_s=0.001, burst=1))
+     threading.Thread(target=srv.serve_forever, daemon=True).start()
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..b9eb884 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -45,6 +45,14 @@ def test_quote_promo_does_not_stack():
+         quote(D("5"), "domestic", 1, "NOPE")
+ 
+ 
++def test_quote_rejects_total_over_limit():
++    with pytest.raises(PricingError, match="total too large"):
++        quote(D("30"), "world", 500)  # 52.25 * 500 = 26125.00
++    with pytest.raises(PricingError, match="total too large"):
++        quote(D("30"), "domestic", 600)  # 19.00 * 600 = 11400.00, less 12% = 10032.00
++    assert quote(D("30"), "domestic", 500).total == D("8360.00")  # 9500.00 less 12%, under the limit
++
++
+ def test_quote_rejects_bad_zone_and_quantity():
+     with pytest.raises(PricingError):
+         quote(D("1"), "mars")
+-- 
+2.43.0
+

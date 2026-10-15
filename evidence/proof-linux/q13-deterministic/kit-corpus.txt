@@ -1,0 +1,21 @@
+# kit corpus (corpus/cases.py, kit v0.2): 12 seeded defects + 8 clean cases through the deterministic checks (offline registry fixture)
+K01 defect expect=['test-integrity.test-removed'] block=['test-integrity.test-removed'] warn=- -> PASS
+K02 defect expect=['test-integrity.assertion-weakened'] block=['test-integrity.assertion-weakened'] warn=['test-integrity.expectation-changed'] -> PASS
+K03 defect expect=['test-integrity.test-skipped'] block=['test-integrity.test-skipped'] warn=- -> PASS
+K04 defect expect=['test-integrity.tautology'] block=['test-integrity.assertion-weakened', 'test-integrity.tautology'] warn=['test-integrity.expectation-changed'] -> PASS
+K05 defect expect=['test-integrity.test-config-weakened'] block=['test-integrity.test-config-weakened'] warn=- -> PASS
+K06 defect expect=['dependency.not-on-registry'] block=['dependency.not-on-registry'] warn=- -> PASS
+K07 defect expect=['dependency.too-new'] block=['dependency.too-new'] warn=['dependency.fresh-release', 'licence.unknown-dependency'] -> PASS
+K08 defect expect=['licence.copyleft-snippet'] block=['licence.copyleft-snippet'] warn=- -> PASS
+K09 defect expect=['gates.py.tls-verify-disabled'] block=['gates.py.tls-verify-disabled'] warn=- -> PASS
+K10 defect expect=['gates.py.swallowed-broad-exception'] block=['gates.py.swallowed-broad-exception'] warn=- -> PASS
+K11 defect expect=['scope.out-of-scope-file'] block=['scope.out-of-scope-file'] warn=- -> PASS
+K17 defect expect=['test-integrity.expectation-changed'] block=- warn=['test-integrity.expectation-changed'] -> PASS
+K12 clean  expect=- block=- warn=- -> PASS
+K13 clean  expect=- block=- warn=- -> PASS
+K14 clean  expect=- block=- warn=- -> PASS
+K15 clean  expect=- block=- warn=- -> PASS
+K16 clean  expect=- block=- warn=- -> PASS
+K19 clean  expect=- block=- warn=- -> PASS
+K20 clean  expect=['scope.out-of-scope-test'] block=- warn=['scope.out-of-scope-test'] -> PASS
+K18 clean  expect=- block=- warn=- -> PASS

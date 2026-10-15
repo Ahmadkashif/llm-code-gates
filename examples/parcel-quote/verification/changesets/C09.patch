@@ -1,0 +1,40 @@
+From 33418861e218fcfbce5ad5b77c8d9678e016eac3 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C09: Make the rate limit configurable via RATE_PER_S and
+ RATE_BURST.
+
+---
+ .gates/task.md  | 5 +++++
+ quotesvc/app.py | 3 ++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..d6034c0
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C09)
++
++Make the rate limit configurable via RATE_PER_S and RATE_BURST.
++
++Scope: quotesvc/app.py
+diff --git a/quotesvc/app.py b/quotesvc/app.py
+index ba770c4..4b86830 100644
+--- a/quotesvc/app.py
++++ b/quotesvc/app.py
+@@ -69,7 +69,8 @@ def build_server(host: str = "127.0.0.1", port: int = 0, store: QuoteStore | Non
+ 
+ 
+ def main() -> None:  # pragma: no cover
+-    srv = build_server(os.environ.get("HOST", "127.0.0.1"), int(os.environ.get("PORT", "8080")))
++    limiter = TokenBucket(float(os.environ.get("RATE_PER_S", "5")), int(os.environ.get("RATE_BURST", "20")))
++    srv = build_server(os.environ.get("HOST", "127.0.0.1"), int(os.environ.get("PORT", "8080")), limiter=limiter)
+     srv.serve_forever()
+ 
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,21 @@
+# TypeScript stack. TEMPLATE ONLY: NOT VERIFIED in this research (no TS sample was built).
+# Native tools: StrykerJS --incremental (diffs against its last report, not a git ref), c8/istanbul json-summary.
+name: typescript
+verified: false
+detect: [package.json, tsconfig.json]
+ecosystem: npm
+tools:
+  node: "24"
+  semgrep: "1.178.0"
+  "@stryker-mutator/core": "10.0.0"
+  vitest: "3"
+env:
+  GATES_TEST_CMD: pnpm exec vitest run --passWithNoTests=false
+  GATES_COVERAGE_CMD: ""                  # coverage-drop is Python-only in this PoC; use vitest --coverage thresholds
+  GATES_MUTATION_CMD: pnpm exec stryker run --incremental --mutate "$(git diff --name-only $BASE_REF -- 'src/**/*.ts' | paste -sd, -)"
+  GATES_DEP_MIN_AGE_DAYS: "30"
+  GATES_DEP_COOLDOWN_DAYS: "7"
+checks:
+  fast: [test-tamper, dep-check, semgrep-changed, scope-check]
+  deterministic: [test-tamper, dep-check, semgrep, scope-check, licence-check, dup-check]
+  server: [diff-mutation, llm-review]

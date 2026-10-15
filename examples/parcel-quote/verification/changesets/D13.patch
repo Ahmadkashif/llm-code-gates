@@ -1,0 +1,38 @@
+From 9ce84df9c6e8e6ebc943879e21d52b9c9b99f36b Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D13: Simplify the token bucket refill.
+
+---
+ .gates/task.md        | 5 +++++
+ quotesvc/ratelimit.py | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..5c14cfd
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D13)
++
++Simplify the token bucket refill.
++
++Scope: quotesvc/ratelimit.py
+diff --git a/quotesvc/ratelimit.py b/quotesvc/ratelimit.py
+index f8c16df..498b00b 100644
+--- a/quotesvc/ratelimit.py
++++ b/quotesvc/ratelimit.py
+@@ -20,7 +20,7 @@ class TokenBucket:
+         now = self.clock()
+         with self._lock:
+             tokens, last = self._state.get(client, (float(self.burst), now))
+-            tokens = min(float(self.burst), tokens + (now - last) * self.rate)
++            tokens = tokens + (now - last) * self.rate
+             if tokens >= 1.0:
+                 self._state[client] = (tokens - 1.0, now)
+                 return True
+-- 
+2.43.0
+

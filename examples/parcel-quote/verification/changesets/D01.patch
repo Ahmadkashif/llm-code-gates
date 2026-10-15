@@ -1,0 +1,48 @@
+From f1fcfc3acba173a6bc65ce819d233214eebb293c Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D01: Format quote totals with the currency formatting helper
+ library.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/pricing.py | 2 ++
+ requirements.txt    | 1 +
+ 3 files changed, 8 insertions(+)
+ create mode 100644 .gates/task.md
+ create mode 100644 requirements.txt
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..bcbeef5
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D01)
++
++Format quote totals with the currency formatting helper library.
++
++Scope: quotesvc/pricing.py, requirements.txt
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..a376278 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -4,6 +4,8 @@ from __future__ import annotations
+ from dataclasses import dataclass
+ from decimal import ROUND_HALF_UP, Decimal
+ 
++from pyquote_currency_utils import format_money  # noqa: F401
++
+ # (upper weight bound in kg, inclusive) -> base price per parcel
+ WEIGHT_BANDS: list[tuple[Decimal, Decimal]] = [
+     (Decimal("0.5"), Decimal("3.90")),
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+index 0000000..00ea228
+--- /dev/null
++++ b/requirements.txt
+@@ -0,0 +1 @@
++pyquote-currency-utils==1.4.0
+-- 
+2.43.0
+

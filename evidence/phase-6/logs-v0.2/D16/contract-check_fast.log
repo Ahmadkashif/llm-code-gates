@@ -1,0 +1,23 @@
+task: [check:fast] [ -z "quotesvc/pricing.py " ] || python3 -m ruff check quotesvc/pricing.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+........................                                                 [100%]
+24 passed, 5 deselected in 0.24s
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D16/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 1 finding(s), 1 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+   [BLOCK] test-integrity.test-config-weakened (high) pyproject.toml:9 — test/coverage configuration now excludes or deselects tests
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D16/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D16/gates/checks/scope_check.py --base main
+== gates/scope-check: 1 finding(s), 1 blocking | {"base": "890f7797c930", "files": 2, "lines": 11, "scope": ["quotesvc/pricing.py"]}
+   [BLOCK] scope.out-of-scope-file (medium) pyproject.toml — changed outside the declared scope ['quotesvc/pricing.py']
+
+=== gates:fast FAILED: test-tamper, scope-check in 2.68s [test-tamper 0.09s rc=1] [dep-check 0.36s rc=0] [semgrep-changed 1.93s rc=0] [scope-check 0.29s rc=1]
+task: Failed to run task "check:fast": task: Failed to run task "gates:fast": exit status 1

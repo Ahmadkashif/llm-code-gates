@@ -1,0 +1,21 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D06/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 8 finding(s), 1 blocking | {"base": "370a061fc5ed", "files": 1, "candidates": 8, "baseline_test_s": 2.71, "mutants": 8, "killed": 1, "survived": 7, "score": 0.125, "wall_s": 21.6}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:54 — mutant survived (cmp: LtE -> Lt) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:56 — mutant survived (cmp: Gt -> GtE) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:54 — mutant survived (const: 0 -> 1) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:56 — mutant survived (const: 2000 -> 2001) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:58 — mutant survived (bin: Mult -> Div) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:55 — mutant survived (return: return value -> None) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:57 — mutant survived (return: return value -> None) — no test fails when this line changes
+   [BLOCK] test-adequacy.mutation-score (high)  — diff mutation score 1/8 = 0.12 < 0.6: the tests do not constrain the new code
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D06/gates/review/llm_review.py --base main
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.01}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-adequacy (medium) tests/test_pricing.py:62 — assertion only checks the value is not None — Input/state: code under test returns a wrong value -> executes line 62 -> actual: test passes -> expected: test fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server FAILED: diff-mutation in 24.5s [diff-mutation 24.42s rc=1] [llm-review 0.08s rc=0]
+task: Failed to run task "gates:server": exit status 1

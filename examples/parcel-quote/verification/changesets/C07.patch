@@ -1,0 +1,56 @@
+From d4418c2c575cbade4add618eb1f0c7ac56f36dbc Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C07: Add a manual smoke script using httpx (dev only).
+
+---
+ .gates/task.md       |  5 +++++
+ requirements-dev.txt |  1 +
+ scripts/smoke.py     | 14 ++++++++++++++
+ 3 files changed, 20 insertions(+)
+ create mode 100644 .gates/task.md
+ create mode 100644 scripts/smoke.py
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..9d97d8e
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C07)
++
++Add a manual smoke script using httpx (dev only).
++
++Scope: scripts/smoke.py, requirements-dev.txt
+diff --git a/requirements-dev.txt b/requirements-dev.txt
+index 7f1f8c3..0d52c0a 100644
+--- a/requirements-dev.txt
++++ b/requirements-dev.txt
+@@ -5,3 +5,4 @@ hypothesis==6.168.3
+ ruff==0.16.9
+ mypy==2.4.0
+ pygments==2.21.0  # transitive (pytest); pinned so osv-scanner's resolver does not assume an old version
++httpx==0.28.1
+diff --git a/scripts/smoke.py b/scripts/smoke.py
+new file mode 100644
+index 0000000..e6c4b2c
+--- /dev/null
++++ b/scripts/smoke.py
+@@ -0,0 +1,14 @@
++"""Manual smoke test against a running instance: python scripts/smoke.py http://127.0.0.1:8080"""
++import sys
++
++import httpx
++
++
++def main(base: str) -> int:
++    r = httpx.get(f"{base}/up", timeout=5)
++    print(r.status_code, r.text)
++    return 0 if r.status_code == 200 else 1
++
++
++if __name__ == "__main__":
++    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8080"))
+-- 
+2.43.0
+

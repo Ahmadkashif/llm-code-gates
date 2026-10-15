@@ -1,0 +1,12 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D10/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 1 finding(s), 0 blocking | {"base": "890f7797c930", "files": 2, "candidates": 9, "baseline_test_s": 2.92, "unexecuted_candidates": 3, "mutants": 6, "killed": 6, "survived": 0, "score": 1.0, "wall_s": 14.3}
+   [INFORM] test-adequacy.unexecuted-lines (info)  — 1 added line(s) are not executed by any test; not mutated (coverage-drop owns untested code)
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D10/gates/review/llm_review.py --base main
+== gates/llm-review: 0 finding(s), 0 blocking | {"profile": "stub", "files": 3, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 0, "baselined": 0, "wall_s": 0.07}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 21.1s [diff-mutation 20.79s rc=0] [llm-review 0.31s rc=0]

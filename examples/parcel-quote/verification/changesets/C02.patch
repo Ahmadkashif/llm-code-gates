@@ -1,0 +1,41 @@
+From 50074d750a30a36d94b5177b23900abec03609c0 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] C02: Document the API in the README.
+
+---
+ .gates/task.md | 5 +++++
+ README.md      | 8 ++++++++
+ 2 files changed, 13 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..9d63763
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C02)
++
++Document the API in the README.
++
++Scope: README.md
+diff --git a/README.md b/README.md
+index 85d2aea..28e6628 100644
+--- a/README.md
++++ b/README.md
+@@ -4,3 +4,11 @@ A small stdlib Python HTTP service, written from scratch to verify the llm-code-
+ `GET /up`, `POST /v1/quote` (weight bands × zone, quantity/promo discounts, Decimal money), `GET /v1/quote/<id>`
+ (SQLite), a per-client token bucket. Its `Taskfile.yml` implements the check contract
+ (`check:fast` / `check` / `ci` / `image`). Not a real product.
++
++## API
++
++| Method | Path | Body | Response |
++|---|---|---|---|
++| GET | `/up` | — | `{"status": "ok"}` |
++| POST | `/v1/quote` | `{"weight_kg": 1.5, "zone": "eu", "quantity": 2, "promo": "WELCOME10"}` | 201 with id, unit_price, subtotal, discount, total |
++| GET | `/v1/quote/<id>` | — | the stored quote or 404 |
+-- 
+2.43.0
+

@@ -1,0 +1,23 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/C07/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 11 finding(s), 1 blocking | {"base": "370a061fc5ed", "files": 1, "candidates": 10, "baseline_test_s": 2.91, "mutants": 10, "killed": 0, "survived": 10, "score": 0.0, "wall_s": 28.0}
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:10 — mutant survived (cmp: Eq -> NotEq) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:13 — mutant survived (cmp: Eq -> NotEq) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:14 — mutant survived (cmp: Gt -> GtE) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:8 — mutant survived (const: 5 -> 6) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:10 — mutant survived (const: 0 -> 1) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:10 — mutant survived (const: 1 -> 2) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:10 — mutant survived (const: 200 -> 201) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:14 — mutant survived (const: 1 -> 2) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:14 — mutant survived (const: 1 -> 2) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) scripts/smoke.py:10 — mutant survived (return: return value -> None) — no test fails when this line changes
+   [BLOCK] test-adequacy.mutation-score (high)  — diff mutation score 0/10 = 0.00 < 0.6: the tests do not constrain the new code
+
+--- gates:server -> llm-review: <research>/phase-6/wt/C07/gates/review/llm_review.py --base main
+== gates/llm-review: 0 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 0, "baselined": 0, "wall_s": 0.02}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server FAILED: diff-mutation in 31.35s [diff-mutation 31.24s rc=1] [llm-review 0.11s rc=0]
+task: Failed to run task "gates:server": exit status 1

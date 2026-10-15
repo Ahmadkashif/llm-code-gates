@@ -1,0 +1,44 @@
+From df58f147904ceb1cbba16fd683fd90aa22ca70ee Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C05: Make the band boundary test table-driven.
+
+---
+ .gates/task.md        | 5 +++++
+ tests/test_pricing.py | 8 +++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..0181213
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C05)
++
++Make the band boundary test table-driven.
++
++Scope: tests/test_pricing.py
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..9c55425 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -7,11 +7,9 @@ from hypothesis import strategies as st
+ from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
+ 
+ 
+-def test_band_boundaries_are_inclusive():
+-    assert band_price(D("0.5")) == D("3.90")
+-    assert band_price(D("0.51")) == D("5.50")
+-    assert band_price(D("2")) == D("5.50")
+-    assert band_price(D("30")) == D("19.00")
++@pytest.mark.parametrize("weight,price", [("0.5", "3.90"), ("0.51", "5.50"), ("2", "5.50"), ("30", "19.00")])
++def test_band_boundaries_are_inclusive(weight, price):
++    assert band_price(D(weight)) == D(price)
+ 
+ 
+ def test_band_rejects_out_of_range():
+-- 
+2.43.0
+

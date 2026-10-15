@@ -1,0 +1,56 @@
+From 4bfc05477a0dbe607b1f40adc7bb2a71442e8191 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C06: Remove the unused QuoteStore.count method.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/store.py   | 4 ----
+ tests/test_store.py | 3 +--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..d46dec1
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C06)
++
++Remove the unused QuoteStore.count method.
++
++Scope: quotesvc/store.py, tests/test_store.py
+diff --git a/quotesvc/store.py b/quotesvc/store.py
+index 0a0799b..6b531a0 100644
+--- a/quotesvc/store.py
++++ b/quotesvc/store.py
+@@ -30,7 +30,3 @@ class QuoteStore:
+         if row is None:
+             return None
+         return {"id": row[0], "zone": row[1], "quantity": row[2], "total": row[3]}
+-
+-    def count(self) -> int:
+-        with self._lock:
+-            return int(self._db.execute("SELECT COUNT(*) FROM quotes").fetchone()[0])
+diff --git a/tests/test_store.py b/tests/test_store.py
+index dd9d03f..43e30a2 100644
+--- a/tests/test_store.py
++++ b/tests/test_store.py
+@@ -3,12 +3,11 @@ from decimal import Decimal as D
+ from quotesvc.store import QuoteStore
+ 
+ 
+-def test_roundtrip_and_count():
++def test_roundtrip():
+     s = QuoteStore()
+     qid = s.save("eu", 2, D("17.60"))
+     assert s.get(qid) == {"id": qid, "zone": "eu", "quantity": 2, "total": "17.60"}
+     assert s.get("0" * 32) is None
+-    assert s.count() == 1
+ 
+ 
+ def test_lookup_is_not_injectable():
+-- 
+2.43.0
+

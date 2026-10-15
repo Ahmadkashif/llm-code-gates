@@ -1,0 +1,7 @@
+rules:
+  - id: service.no-float-money
+    languages: [python]
+    severity: ERROR
+    message: Money must be Decimal, never float, in pricing code.
+    paths: {include: ["quotesvc/pricing.py"]}
+    pattern: float(...)

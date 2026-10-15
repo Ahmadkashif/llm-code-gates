@@ -1,0 +1,186 @@
+{
+ "id": "D09",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 2.62
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 20.87
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 22.54
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 2.22,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.09,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 1.85,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.07,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.8,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.12,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.07,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 1,
+     "wall_s": 0.36,
+     "findings": [
+      {
+       "rule": "licence.copyleft-snippet",
+       "category": "licence",
+       "level": "block",
+       "severity": "high",
+       "path": "quotesvc/money.py",
+       "line": 1,
+       "suppressed": false,
+       "fingerprint": "25d1844216b4621c"
+      }
+     ]
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 7.11,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 5.99,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 5.44,
+     "findings": []
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.07
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.77
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 7.79
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.02
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.82
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.22,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  }
+ ]
+}

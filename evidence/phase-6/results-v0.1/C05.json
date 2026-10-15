@@ -1,0 +1,252 @@
+{
+ "id": "C05",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.98
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 23.59
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 22.44
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.07,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.23,
+     "findings": [
+      {
+       "rule": "test-integrity.assertions-removed",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 11,
+       "suppressed": false,
+       "fingerprint": "10cddc21ee6dca5c"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.31,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 11.3,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.4,
+     "findings": [
+      {
+       "rule": "test-integrity.assertions-removed",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 11,
+       "suppressed": false,
+       "fingerprint": "10cddc21ee6dca5c"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.39,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.19,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.36,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 7.06,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 1.02,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 0.31,
+     "findings": [
+      {
+       "rule": "test-adequacy.mutation-skipped",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "info",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "754c173d2c3aa86d"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.19,
+     "findings": [
+      {
+       "rule": "llm.test-integrity",
+       "category": "test-integrity",
+       "level": "warn",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 11,
+       "suppressed": false,
+       "fingerprint": "f2e6f7b8fb64a955"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.12
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.42
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.77
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.2
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.92
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.83
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 11,
+     "suppressed": false,
+     "fingerprint": "f2e6f7b8fb64a955"
+    }
+   ],
+   "calls": 13,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 11,
+     "suppressed": false,
+     "fingerprint": "f2e6f7b8fb64a955"
+    }
+   ],
+   "calls": 13,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 11,
+     "suppressed": false,
+     "fingerprint": "f2e6f7b8fb64a955"
+    }
+   ],
+   "calls": 13,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category"
+   ]
+  }
+ ]
+}

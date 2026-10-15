@@ -1,0 +1,43 @@
+From c87b69f199ed6e998b7f9c7e4db106ddb0b255f0 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D08: Make quote persistence failures not break the API
+ response.
+
+---
+ .gates/task.md  | 5 +++++
+ quotesvc/app.py | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..2b006e9
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D08)
++
++Make quote persistence failures not break the API response.
++
++Scope: quotesvc/app.py
+diff --git a/quotesvc/app.py b/quotesvc/app.py
+index ba770c4..419eb42 100644
+--- a/quotesvc/app.py
++++ b/quotesvc/app.py
+@@ -56,7 +56,11 @@ def make_handler(store: QuoteStore, limiter: TokenBucket):
+                 return self._send(422, {"error": str(e), "field": e.field})
+             except PricingError as e:
+                 return self._send(422, {"error": str(e)})
+-            qid = store.save(req["zone"], req["quantity"], q.total)
++            qid = ""
++            try:
++                qid = store.save(req["zone"], req["quantity"], q.total)
++            except Exception:
++                pass
+             self._send(201, {"id": qid, "unit_price": str(q.unit_price), "subtotal": str(q.subtotal),
+                              "discount": str(q.discount), "total": str(q.total)})
+     return Handler
+-- 
+2.43.0
+

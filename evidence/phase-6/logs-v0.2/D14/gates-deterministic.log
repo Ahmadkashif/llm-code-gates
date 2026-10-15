@@ -1,0 +1,26 @@
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/D14/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/D14/gates/checks/dep_check.py --base main
+== gates/dep-check: 1 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+   [WARN] dependency.undeclared-import (medium) quotesvc/pricing.py:7 — import 'decimal_tools' is not stdlib, not a local module and not a declared dependency
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/D14/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/D14/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "lines": 7, "scope": ["quotesvc/pricing.py"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/D14/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "890f7797c930"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/D14/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/D14/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 1 finding(s), 0 blocking
+   [WARN] test-adequacy.coverage-error (medium)  — could not measure coverage at HEAD
+
+=== gates:deterministic passed in 4.6s [test-tamper 0.46s rc=0] [dep-check 0.24s rc=0] [semgrep 2.06s rc=0] [scope-check 0.08s rc=0] [licence-check 0.33s rc=0] [dup-check 0.34s rc=0] [coverage-drop 1.1s rc=0]

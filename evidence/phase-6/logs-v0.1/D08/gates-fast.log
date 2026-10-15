@@ -1,0 +1,17 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D08/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 0}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D08/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "targets": 1, "rules": 1}
+   [BLOCK] gates.py.swallowed-broad-exception (medium) quotesvc/app.py:60 — Broad exception swallowed (except/except Exception with only pass/continue/return None). Errors vanish silently. Catch the specific exception, or log and re-raise.
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D08/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "lines": 11, "scope": ["quotesvc/app.py"]}
+
+=== gates:fast FAILED: semgrep-changed in 2.06s [test-tamper 0.08s rc=0] [dep-check 0.08s rc=0] [semgrep-changed 1.84s rc=1] [scope-check 0.05s rc=0]
+task: Failed to run task "gates:fast": exit status 1

@@ -1,0 +1,212 @@
+{
+ "id": "D10",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.07
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 22.13
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 21.53
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.07,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.17,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.31,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 1,
+     "wall_s": 0.07,
+     "findings": [
+      {
+       "rule": "scope.out-of-scope-file",
+       "category": "scope",
+       "level": "block",
+       "severity": "medium",
+       "path": "quotesvc/app.py",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "2959d55479dfa488"
+      }
+     ]
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.65,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.1,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.22,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.4,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 1,
+     "wall_s": 0.06,
+     "findings": [
+      {
+       "rule": "scope.out-of-scope-file",
+       "category": "scope",
+       "level": "block",
+       "severity": "medium",
+       "path": "quotesvc/app.py",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "2959d55479dfa488"
+      }
+     ]
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.22,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.35,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 6.83,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 25.4,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 25.16,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/app.py",
+       "line": 68,
+       "suppressed": false,
+       "fingerprint": "4014d85e85a23e99"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/app.py",
+       "line": 68,
+       "suppressed": false,
+       "fingerprint": "24cce62c3387d3e8"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.13,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 0.92
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.67
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.15
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.87
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.72
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.27,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.11,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

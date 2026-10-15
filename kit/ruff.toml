@@ -1,0 +1,8 @@
+# The kit's own lint config. Repos that vendor the kit should exclude gates/ from their linters (README step 4).
+line-length = 140
+target-version = "py311"
+extend-exclude = ["semgrep/llm-python.py"]   # deliberately insecure Semgrep test fixture
+
+[lint]
+select = ["E", "F", "W", "B", "BLE", "S110", "UP"]
+ignore = ["E741"]

@@ -1,0 +1,6 @@
+{
+  "pypi:requests": {"exists": true, "created": "2011-02-14T00:00:00Z", "versions": {"2.32.3": "2024-05-29T00:00:00Z"}, "licence": "Apache-2.0"},
+  "pypi:attrs": {"exists": true, "created": "2015-01-27T00:00:00Z", "versions": {"24.2.0": "2024-08-06T00:00:00Z"}, "licence": "MIT"},
+  "pypi:reqeusts-toolbelt2": {"exists": true, "created": "2099-01-01T00:00:00Z", "versions": {"0.1.0": "2099-01-01T00:00:00Z"}, "licence": ""},
+  "pypi:fastjson-validator-pro": {"exists": false, "created": null, "versions": {}}
+}

@@ -1,0 +1,4 @@
+# Deliberately seeded SYNTHETIC secret (change set D17, "hard-coded secret") used to verify the repo's gitleaks
+# task. The value was generated for this test, never valid anywhere. Fingerprints: <file>:<rule>:<line>.
+examples/parcel-quote/verification/changesets/D17.patch:generic-api-key:32
+evidence/phase-6/make_changesets.py:generic-api-key:281

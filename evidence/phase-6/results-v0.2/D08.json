@@ -1,0 +1,223 @@
+{
+ "id": "D08",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 0.12
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 0.11
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 0.11
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.22,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.43,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 1,
+     "wall_s": 2.03,
+     "findings": [
+      {
+       "rule": "gates.py.swallowed-broad-exception",
+       "category": "error-handling",
+       "level": "block",
+       "severity": "medium",
+       "path": "quotesvc/app.py",
+       "line": 60,
+       "suppressed": false,
+       "fingerprint": "21439881ff914080"
+      }
+     ]
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.29,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.5,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.41,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 1,
+     "wall_s": 2.32,
+     "findings": [
+      {
+       "rule": "gates.py.swallowed-broad-exception",
+       "category": "error-handling",
+       "level": "block",
+       "severity": "medium",
+       "path": "quotesvc/app.py",
+       "line": 60,
+       "suppressed": false,
+       "fingerprint": "21439881ff914080"
+      }
+     ]
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.05,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.12,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 6.81,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      },
+      {
+       "rule": "test-adequacy.diff-coverage",
+       "category": "test-adequacy",
+       "level": "warn",
+       "severity": "medium",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "1e20172eb691515e"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 1.17,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": [
+      {
+       "rule": "test-adequacy.mutation-skipped",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "info",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "754c173d2c3aa86d"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 201,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 1.52
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.02
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.47
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 1.02
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.35
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.22
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.93
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,304 @@
+{
+ "id": "D06",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 3.57
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 25.25
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 28.87
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 3.47,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.46,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.35,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.4,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 11.65,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.45,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.32,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.37,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 7.2,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 201,
+   "wall_s": 23.51,
+   "checks": {
+    "diff-mutation": {
+     "rc": 1,
+     "wall_s": 22.91,
+     "findings": [
+      {
+       "rule": "test-adequacy.unexecuted-lines",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "info",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "bb9c702b42787455"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 54,
+       "suppressed": false,
+       "fingerprint": "c11650173229cb4f"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 56,
+       "suppressed": false,
+       "fingerprint": "791a6dfd69b09bfb"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 54,
+       "suppressed": false,
+       "fingerprint": "4e27cd6edd7ab4aa"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 56,
+       "suppressed": false,
+       "fingerprint": "bb1554bc631eb5c6"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 58,
+       "suppressed": false,
+       "fingerprint": "549d1b049668aa9c"
+      },
+      {
+       "rule": "test-adequacy.mutation-score",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "fbe31a5c9838c40e"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.11,
+     "findings": [
+      {
+       "rule": "llm.test-adequacy",
+       "category": "test-adequacy",
+       "level": "warn",
+       "severity": "medium",
+       "path": "tests/test_pricing.py",
+       "line": 62,
+       "suppressed": false,
+       "fingerprint": "1a234e014f322403"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.12
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.97
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 7.95
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.02
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.73
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.42,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  }
+ ]
+}

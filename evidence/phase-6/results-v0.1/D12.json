@@ -1,0 +1,191 @@
+{
+ "id": "D12",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 0.57
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 2.32
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 1.27
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 2.72,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.11,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.38,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.06,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 0,
+   "wall_s": 7.14,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.42,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.22,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.15,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.24,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 3.59,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-error",
+       "category": "test-adequacy",
+       "level": "warn",
+       "severity": "medium",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "43758a4c720e9937"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 3.48,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 3.2,
+     "findings": [
+      {
+       "rule": "test-adequacy.mutation-skipped",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "info",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "db56957e60ea8abf"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.1,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:unit": {
+   "rc": 201,
+   "wall_s": 0.87
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 1.12
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.5
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.12
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.83
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

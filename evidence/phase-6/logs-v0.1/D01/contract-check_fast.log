@@ -1,0 +1,25 @@
+task: [check:fast] [ -z "quotesvc/pricing.py " ] || python3 -m ruff check quotesvc/pricing.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_app.py ______________________
+ImportError while importing test module '<research>/phase-6/wt/D01/tests/test_app.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_app.py:9: in <module>
+    from quotesvc.app import build_server
+quotesvc/app.py:9: in <module>
+    from .pricing import PricingError, quote
+quotesvc/pricing.py:7: in <module>
+    from pyquote_currency_utils import format_money  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'pyquote_currency_utils'
+=========================== short test summary info ============================
+ERROR tests/test_app.py
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 error in 0.12s
+task: Failed to run task "check:fast": exit status 1

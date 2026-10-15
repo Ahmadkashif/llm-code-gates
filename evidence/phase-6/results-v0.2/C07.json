@@ -1,0 +1,180 @@
+{
+ "id": "C07",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 4.78
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 15.18
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 13.17
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 3.58,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.42,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.03,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.3,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 0,
+   "wall_s": 12.06,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.42,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.32,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.29,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.05,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.99,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.3,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 7.16,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 6.84,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 6.4,
+     "findings": [
+      {
+       "rule": "test-adequacy.unexecuted-lines",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "info",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "fd31f097d7e9c351"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.27,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.12
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.42
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 1.17
+  },
+  "audit": {
+   "rc": 201,
+   "wall_s": 13.23
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.22
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.88
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.22,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

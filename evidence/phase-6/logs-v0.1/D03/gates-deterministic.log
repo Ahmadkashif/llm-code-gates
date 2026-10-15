@@ -1,0 +1,27 @@
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/D03/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "test_files_compared": 1}
+   [BLOCK] test-integrity.test-removed (high) tests/test_pricing.py — test test_quantity_discount_thresholds removed (4 assertion(s))
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/D03/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/D03/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/D03/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 2, "lines": 16, "scope": ["quotesvc/pricing.py"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/D03/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/D03/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/D03/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "head_pct": 95.0, "base_pct": 95.91, "diff_cov": 1.0}
+   [BLOCK] test-adequacy.coverage-drop (high)  — total coverage fell 95.91% -> 95.00% (max drop 0.5 pts)
+
+=== gates:deterministic FAILED: test-tamper, coverage-drop in 10.58s [test-tamper 0.45s rc=1] [dep-check 0.29s rc=0] [semgrep 2.2s rc=0] [scope-check 0.05s rc=0] [licence-check 0.13s rc=0] [dup-check 0.34s rc=0] [coverage-drop 7.11s rc=1]
+task: Failed to run task "gates:deterministic": exit status 1

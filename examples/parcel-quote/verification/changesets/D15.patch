@@ -1,0 +1,61 @@
+From a98ce21423bdcd44bef231f5664b2ba1b1f516b7 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D15: Add a price lookup for oversize parcels using the same
+ bands.
+
+---
+ .gates/task.md        |  5 +++++
+ quotesvc/pricing.py   | 10 ++++++++++
+ tests/test_pricing.py |  5 +++++
+ 3 files changed, 20 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..d0516c9
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D15)
++
++Add a price lookup for oversize parcels using the same bands.
++
++Scope: quotesvc/pricing.py, tests/test_pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..9a9a1dc 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -40,6 +40,16 @@ def band_price(weight_kg: Decimal) -> Decimal:
+     raise PricingError(f"weight above {MAX_WEIGHT_KG} kg")
+ 
+ 
++def oversize_band_price(weight_kg: Decimal) -> Decimal:
++    """Base price for an oversize parcel (same bands, plus a flat 4.00)."""
++    if weight_kg <= 0:
++        raise PricingError("weight must be positive")
++    for upper, price in WEIGHT_BANDS:
++        if weight_kg <= upper:
++            return price
++    raise PricingError(f"weight above {MAX_WEIGHT_KG} kg")
++
++
+ def quantity_discount(quantity: int) -> Decimal:
+     """Fractional discount for multi-parcel orders: 10+ parcels 5%, 50+ parcels 12%."""
+     if quantity >= 50:
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..e057e7c 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -55,3 +55,8 @@ def test_quote_rejects_bad_zone_and_quantity():
+ @given(st.decimals(min_value=D("0.01"), max_value=D("29.99"), places=2), st.sampled_from(["domestic", "eu", "world"]))
+ def test_price_is_monotonic_in_weight(w, zone):
+     assert quote(w, zone).total <= quote(w + D("0.01"), zone).total
++
++
++def test_oversize_band_price():
++    from quotesvc.pricing import oversize_band_price
++    assert oversize_band_price(D("1")) == D("5.50")
+-- 
+2.43.0
+

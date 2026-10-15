@@ -1,0 +1,2 @@
+task: [lint] python3 -m ruff check .
+All checks passed!

@@ -1,0 +1,14 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D03/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 2 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "candidates": 2, "baseline_test_s": 2.94, "unexecuted_candidates": 0, "mutants": 2, "killed": 0, "survived": 2, "score": 0.0, "wall_s": 5.5}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:45 — mutant survived (cmp: GtE -> Gt) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/pricing.py:45 — mutant survived (const: 60 -> 61) — no test fails when this line changes
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D03/gates/review/llm_review.py --base main
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.01}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-integrity (high) tests/test_pricing.py:25 — assertion removed from tests — Input/state: the checked behaviour regresses -> executes old line 25 (now gone) -> actual: suite passes -> expected: suite fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 12.17s [diff-mutation 12.09s rc=0] [llm-review 0.08s rc=0]

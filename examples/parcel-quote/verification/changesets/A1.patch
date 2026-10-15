@@ -1,0 +1,167 @@
+From 3327b40ea270e54403bdb0a2c6941dc587c2f06f Mon Sep 17 00:00:00 2001
+From: agent-session <agent@example.invalid>
+Date: Thu, 15 Oct 2026 13:16:19 +0500
+Subject: [PATCH] A1: Add an express delivery option (optional boolean express;
+ +25% on the unit price before discounts). (agent session)
+
+---
+ .gates/task.md           |  5 +++++
+ quotesvc/app.py          |  2 +-
+ quotesvc/pricing.py      |  9 +++++++--
+ quotesvc/validation.py   |  6 +++++-
+ tests/test_app.py        |  7 +++++++
+ tests/test_pricing.py    | 15 +++++++++++++++
+ tests/test_validation.py | 13 +++++++++++--
+ 7 files changed, 51 insertions(+), 6 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..4519f0b
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (A1, produced by a headless Claude Code session, model haiku)
++
++Add an express delivery option (optional boolean express; +25% on the unit price before discounts).
++
++Scope: quotesvc/pricing.py, quotesvc/validation.py, quotesvc/app.py
+diff --git a/quotesvc/app.py b/quotesvc/app.py
+index ba770c4..ef2823a 100644
+--- a/quotesvc/app.py
++++ b/quotesvc/app.py
+@@ -49,7 +49,7 @@ def make_handler(store: QuoteStore, limiter: TokenBucket):
+                 return self._send(413 if length > MAX_BODY else 400, {"error": "bad body size"})
+             try:
+                 req = parse_request(json.loads(self.rfile.read(length)))
+-                q = quote(req["weight_kg"], req["zone"], req["quantity"], req["promo"])
++                q = quote(req["weight_kg"], req["zone"], req["quantity"], req["promo"], req["express"])
+             except json.JSONDecodeError:
+                 return self._send(400, {"error": "invalid JSON"})
+             except ValidationError as e:
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..eee4478 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -13,6 +13,7 @@ WEIGHT_BANDS: list[tuple[Decimal, Decimal]] = [
+ ]
+ ZONE_MULTIPLIER = {"domestic": Decimal("1.00"), "eu": Decimal("1.60"), "world": Decimal("2.75")}
+ PROMO_CODES = {"WELCOME10": Decimal("0.10"), "BULK5": Decimal("0.05")}
++EXPRESS_SURCHARGE = Decimal("0.25")  # added to the unit price, before quantity and promo discounts
+ MAX_WEIGHT_KG = WEIGHT_BANDS[-1][0]
+ CENT = Decimal("0.01")
+ 
+@@ -49,12 +50,16 @@ def quantity_discount(quantity: int) -> Decimal:
+     return Decimal("0")
+ 
+ 
+-def quote(weight_kg: Decimal, zone: str, quantity: int = 1, promo: str | None = None) -> Quote:
++def quote(weight_kg: Decimal, zone: str, quantity: int = 1, promo: str | None = None,
++          express: bool = False) -> Quote:
+     if zone not in ZONE_MULTIPLIER:
+         raise PricingError(f"unknown zone {zone!r}")
+     if quantity < 1:
+         raise PricingError("quantity must be at least 1")
+-    unit = (band_price(weight_kg) * ZONE_MULTIPLIER[zone]).quantize(CENT, ROUND_HALF_UP)
++    unit_exact = band_price(weight_kg) * ZONE_MULTIPLIER[zone]
++    if express:
++        unit_exact *= 1 + EXPRESS_SURCHARGE
++    unit = unit_exact.quantize(CENT, ROUND_HALF_UP)
+     subtotal = unit * quantity
+     rate = quantity_discount(quantity)
+     if promo is not None:
+diff --git a/quotesvc/validation.py b/quotesvc/validation.py
+index 15144b3..0327014 100644
+--- a/quotesvc/validation.py
++++ b/quotesvc/validation.py
+@@ -33,4 +33,8 @@ def parse_request(body: Any) -> dict:
+     promo = body.get("promo")
+     if promo is not None and (not isinstance(promo, str) or len(promo) > 32):
+         raise ValidationError("promo", "must be a short string")
+-    return {"weight_kg": weight, "zone": zone, "quantity": quantity, "promo": promo.upper() if promo else None}
++    express = body.get("express", False)
++    if not isinstance(express, bool):
++        raise ValidationError("express", "must be a boolean")
++    return {"weight_kg": weight, "zone": zone, "quantity": quantity, "promo": promo.upper() if promo else None,
++            "express": express}
+diff --git a/tests/test_app.py b/tests/test_app.py
+index fa0f315..d91dbd4 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -45,6 +45,13 @@ def test_quote_roundtrip(base_url):
+     assert stored["total"] == "17.60"
+ 
+ 
++def test_express_quote(base_url):
++    code, body = call(base_url + "/v1/quote", {"weight_kg": 1, "zone": "eu", "express": True})
++    assert code == 201
++    assert body["unit_price"] == "11.00"
++    assert body["total"] == "11.00"
++
++
+ def test_validation_error(base_url):
+     code, body = call(base_url + "/v1/quote", {"weight_kg": -1, "zone": "eu"})
+     assert code == 422
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..0b4f8ad 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -45,6 +45,21 @@ def test_quote_promo_does_not_stack():
+         quote(D("5"), "domestic", 1, "NOPE")
+ 
+ 
++def test_express_adds_25_percent_to_unit_before_discounts():
++    base = quote(D("1"), "eu", 10, "WELCOME10")  # unit 8.80, subtotal 88.00, 10% promo
++    fast = quote(D("1"), "eu", 10, "WELCOME10", express=True)
++    assert fast.unit_price == D("11.00")  # 8.80 * 1.25
++    assert fast.subtotal == D("110.00")
++    assert fast.discount == D("11.00")  # promo applied to the express subtotal
++    assert fast.total == D("99.00")
++    assert base.total == D("79.20")
++
++
++def test_express_unit_price_rounds_to_cents():
++    q = quote(D("0.3"), "world", 1, express=True)  # 3.90 * 2.75 = 10.725 -> * 1.25 = 13.40625
++    assert q.unit_price == D("13.41")
++
++
+ def test_quote_rejects_bad_zone_and_quantity():
+     with pytest.raises(PricingError):
+         quote(D("1"), "mars")
+diff --git a/tests/test_validation.py b/tests/test_validation.py
+index 43411fa..1ed53ba 100644
+--- a/tests/test_validation.py
++++ b/tests/test_validation.py
+@@ -7,11 +7,17 @@ from quotesvc.validation import ValidationError, parse_request
+ 
+ def test_valid_request_is_normalised():
+     r = parse_request({"weight_kg": 1.5, "zone": "eu", "quantity": 3, "promo": "welcome10"})
+-    assert r == {"weight_kg": D("1.5"), "zone": "eu", "quantity": 3, "promo": "WELCOME10"}
++    assert r == {"weight_kg": D("1.5"), "zone": "eu", "quantity": 3, "promo": "WELCOME10", "express": False}
+ 
+ 
+ def test_defaults():
+-    assert parse_request({"weight_kg": "2", "zone": "domestic"})["quantity"] == 1
++    r = parse_request({"weight_kg": "2", "zone": "domestic"})
++    assert r["quantity"] == 1
++    assert r["express"] is False
++
++
++def test_express_flag_is_passed_through():
++    assert parse_request({"weight_kg": "2", "zone": "eu", "express": True})["express"] is True
+ 
+ 
+ @pytest.mark.parametrize("body,field", [
+@@ -26,6 +32,9 @@ def test_defaults():
+     ({"weight_kg": 1, "zone": "eu", "quantity": True}, "quantity"),
+     ({"weight_kg": 1, "zone": "eu", "quantity": 501}, "quantity"),
+     ({"weight_kg": 1, "zone": "eu", "promo": "x" * 33}, "promo"),
++    ({"weight_kg": 1, "zone": "eu", "express": "yes"}, "express"),
++    ({"weight_kg": 1, "zone": "eu", "express": 1}, "express"),
++    ({"weight_kg": 1, "zone": "eu", "express": None}, "express"),
+ ])
+ def test_invalid_requests(body, field):
+     with pytest.raises(ValidationError) as e:
+-- 
+2.43.0
+

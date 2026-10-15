@@ -1,0 +1,276 @@
+{
+ "id": "D03",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 0.12
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 0.11
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 0.11
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.02,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.15,
+     "findings": [
+      {
+       "rule": "test-integrity.test-removed",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "a4a74e59e53ade44"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.4,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.19,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 11.1,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.45,
+     "findings": [
+      {
+       "rule": "test-integrity.test-removed",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "a4a74e59e53ade44"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.29,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.2,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.05,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.13,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 7.11,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 9.3,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 8.66,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 45,
+       "suppressed": false,
+       "fingerprint": "766e03356be6d4e4"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 45,
+       "suppressed": false,
+       "fingerprint": "d9e089f37b9ae06f"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.11,
+     "findings": [
+      {
+       "rule": "llm.test-integrity",
+       "category": "test-integrity",
+       "level": "warn",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 25,
+       "suppressed": false,
+       "fingerprint": "7187f4dda3c0221b"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 201,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 1.57
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.42
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.47
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.56
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.82
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.83
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 25,
+     "suppressed": false,
+     "fingerprint": "7187f4dda3c0221b"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 25,
+     "suppressed": false,
+     "fingerprint": "7187f4dda3c0221b"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.21,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_pricing.py",
+     "line": 25,
+     "suppressed": false,
+     "fingerprint": "7187f4dda3c0221b"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  }
+ ]
+}

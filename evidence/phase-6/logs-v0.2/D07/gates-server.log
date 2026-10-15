@@ -1,0 +1,14 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D07/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 2 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "candidates": 5, "baseline_test_s": 2.94, "unexecuted_candidates": 0, "mutants": 5, "killed": 3, "survived": 2, "score": 0.6, "wall_s": 13.7}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/store.py:37 — mutant survived (const: 0 -> 1) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/store.py:37 — mutant survived (const: 2 -> 3) — no test fails when this line changes
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D07/gates/review/llm_review.py --base main
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.03}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 20.42s [diff-mutation 20.31s rc=0] [llm-review 0.11s rc=0]

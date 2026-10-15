@@ -1,0 +1,14 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/D05/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 2 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "candidates": 6, "baseline_test_s": 2.96, "unexecuted_candidates": 0, "mutants": 6, "killed": 4, "survived": 2, "score": 0.667, "wall_s": 14.4}
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/validation.py:31 — mutant survived (bool: Or -> And) — no test fails when this line changes
+   [INFORM] test-adequacy.surviving-mutant (low) quotesvc/validation.py:9 — mutant survived (const: 1000 -> 1001) — no test fails when this line changes
+
+--- gates:server -> llm-review: <research>/phase-6/wt/D05/gates/review/llm_review.py --base main
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.03}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-integrity (high) tests/test_validation.py:17 — test newly skipped — Input/state: code under test returns a wrong value -> executes line 17 -> actual: test passes -> expected: test fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 21.35s [diff-mutation 21.02s rc=0] [llm-review 0.33s rc=0]

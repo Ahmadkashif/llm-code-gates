@@ -1,0 +1,280 @@
+{
+ "id": "C07",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 4.33
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 19.29
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 13.47
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 3.63,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.42,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.09,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.29,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 0,
+   "wall_s": 11.95,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.41,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.11,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.3,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.05,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.97,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 7.25,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 201,
+   "wall_s": 31.84,
+   "checks": {
+    "diff-mutation": {
+     "rc": 1,
+     "wall_s": 31.24,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 10,
+       "suppressed": false,
+       "fingerprint": "543b057d3698b164"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 13,
+       "suppressed": false,
+       "fingerprint": "543b057d3698b164"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 14,
+       "suppressed": false,
+       "fingerprint": "934709b0066fa776"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 8,
+       "suppressed": false,
+       "fingerprint": "b7b23f4d6f5dae07"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 10,
+       "suppressed": false,
+       "fingerprint": "d96b34c18e1c1086"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 10,
+       "suppressed": false,
+       "fingerprint": "d8358aa39a17f106"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 10,
+       "suppressed": false,
+       "fingerprint": "aca2ed56e109dfde"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 14,
+       "suppressed": false,
+       "fingerprint": "d8358aa39a17f106"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 14,
+       "suppressed": false,
+       "fingerprint": "d8358aa39a17f106"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "scripts/smoke.py",
+       "line": 10,
+       "suppressed": false,
+       "fingerprint": "8f21769b54830220"
+      },
+      {
+       "rule": "test-adequacy.mutation-score",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "fbe31a5c9838c40e"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.11,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.12
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.57
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.07
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.97
+  },
+  "audit": {
+   "rc": 201,
+   "wall_s": 11.81
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.87
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.68
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.31,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

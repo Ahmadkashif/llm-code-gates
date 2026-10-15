@@ -1,0 +1,39 @@
+# ~4B instruct model on an 8 GB GPU behind an OpenAI-compatible gateway (e.g. qwen3-4b-instruct-2507, Q4_K_M).
+# Evidence (phase-3/deep-dive.md §7, §15): non-thinking small judges are near chance as verifiers and near random on
+# vulnerability detection, so this tier runs ONE narrow checklist prompt, unverified, advisory (warn/inform) only.
+# Set num_ctx on the server: Ollama's default 4096 silently truncates an 8k prompt.
+name: local-8gb
+provider: openai-compatible
+tier: small
+base_url_env: GATES_JUDGE_BASE_URL       # e.g. https://<gateway>/v1  (site-specific; never committed)
+base_url: ""
+model_env: GATES_JUDGE_MODEL
+model: qwen3:4b-instruct-2507-q4_K_M
+api_key_env: GATES_JUDGE_API_KEY         # read from env or a 0600 file the user creates; never logged
+api_key_required: true
+ca_file_env: GATES_JUDGE_CA_FILE         # private CA for a self-signed gateway; TLS is never disabled
+min_vram_gb: 8
+min_ram_gb: 16
+context_tokens: 8192
+chars_per_token: 3.2
+concurrency: 1
+timeout_s: 120
+retries: 1
+response_format: json_object
+params:
+  temperature: 0
+  max_tokens: 900
+extra_body: {}
+prompts: [review-single-pass]
+samples: 1
+min_votes: 1
+verify: false
+repair_attempts: 1
+min_confidence: 0.6
+min_severity: medium
+blocking_categories: []
+task_trusted: false
+budget_s: 420
+max_chunks: 4
+layers: [L3]
+fail_on_error: false

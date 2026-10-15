@@ -1,0 +1,6 @@
+task: [audit] osv-scanner scan source --lockfile requirements.txt:requirements-dev.txt
+Starting filesystem walk for root: /
+Scanned <research>/phase-6/wt/D11/requirements-dev.txt file and found 6 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 568.534µs elapsed, 568.822µs wall time
+
+No issues found

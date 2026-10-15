@@ -1,0 +1,8 @@
+$ semgrep --test --metrics=off gates/semgrep   (12 vendored rules, annotated positive/negative fixtures)
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 1 file with 12 Code rules:
+  Scanning 1 file with 12 python rules.
+12/12: ✓ All tests passed
+No tests for fixes found.

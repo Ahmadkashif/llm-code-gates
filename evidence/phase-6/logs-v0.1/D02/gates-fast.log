@@ -1,0 +1,19 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D02/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 0}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D02/gates/checks/dep_check.py --base main
+== gates/dep-check: 2 finding(s), 1 blocking | {"base": "370a061fc5ed", "deps_checked": 1, "registry_lookups": 0, "min_age_days": 30.0}
+   [BLOCK] dependency.too-new (high) requirements.txt — pypi package 'maxapi-lite' was first published 0.0 days ago (< 30); new names are the slopsquatting attack surface
+   [WARN] dependency.fresh-release (low) requirements.txt — pypi maxapi-lite==0.2.0 was released 0.0 days ago (cooldown 7 d)
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed"}
+   note: no changed source files
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D02/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "lines": 6, "scope": ["requirements.txt"]}
+
+=== gates:fast FAILED: dep-check in 0.59s [test-tamper 0.35s rc=0] [dep-check 0.14s rc=1] [semgrep-changed 0.05s rc=0] [scope-check 0.05s rc=0]
+task: Failed to run task "gates:fast": exit status 1

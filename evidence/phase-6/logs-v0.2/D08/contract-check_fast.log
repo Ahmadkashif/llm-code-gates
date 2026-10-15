@@ -1,0 +1,26 @@
+task: [check:fast] [ -z "quotesvc/app.py " ] || python3 -m ruff check quotesvc/app.py 
+S110 `try`-`except`-`pass` detected, consider logging the exception
+  --> quotesvc/app.py:62:13
+   |
+60 |               try:
+61 |                   qid = store.save(req["zone"], req["quantity"], q.total)
+62 | /             except Exception:
+63 | |                 pass
+   | |____________________^
+64 |               self._send(201, {"id": qid, "unit_price": str(q.unit_price), "subtotal": str(q.subtotal),
+65 |                                "discount": str(q.discount), "total": str(q.total)})
+   |
+
+BLE001 Do not catch blind exception: `Exception`
+  --> quotesvc/app.py:62:20
+   |
+60 |             try:
+61 |                 qid = store.save(req["zone"], req["quantity"], q.total)
+62 |             except Exception:
+   |                    ^^^^^^^^^
+63 |                 pass
+64 |             self._send(201, {"id": qid, "unit_price": str(q.unit_price), "subtotal": str(q.subtotal),
+   |
+
+Found 2 errors.
+task: Failed to run task "check:fast": exit status 1

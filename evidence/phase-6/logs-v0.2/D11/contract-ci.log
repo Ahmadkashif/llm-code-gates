@@ -1,0 +1,9 @@
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 7 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.43s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: Failed to run task "ci": task: Failed to run task "check": task: Failed to run task "test:unit": exit status 2

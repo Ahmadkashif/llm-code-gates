@@ -1,0 +1,1127 @@
+{
+ "rows": [
+  {
+   "id": "D01",
+   "label": "defect",
+   "category": "dependency/hallucinated",
+   "expected": "dep-check (not-on-registry); also pytest (ImportError)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "dep-check:dependency.not-on-registry",
+    "repo:test:unit",
+    "repo:test:integration"
+   ],
+   "warned": [
+    "coverage-drop:test-adequacy.coverage-error"
+   ],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 0.67,
+    "check": 2.22,
+    "ci": 1.07
+   }
+  },
+  {
+   "id": "D02",
+   "label": "defect",
+   "category": "dependency/too-new",
+   "expected": "dep-check (too-new)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "dep-check:dependency.too-new"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 1.82,
+    "check": 23.45,
+    "ci": 23.65
+   }
+  },
+  {
+   "id": "D03",
+   "label": "defect",
+   "category": "test-integrity/deleted",
+   "expected": "test-tamper (test-removed)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "test-tamper:test-integrity.test-removed",
+    "coverage-drop:test-adequacy.coverage-drop",
+    "repo:lint"
+   ],
+   "warned": [
+    "llm-review:llm.test-integrity"
+   ],
+   "llm_stub_warn": [
+    "llm.test-integrity"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 0.12,
+    "check": 0.12,
+    "ci": 0.32
+   }
+  },
+  {
+   "id": "D04",
+   "label": "defect",
+   "category": "test-integrity/weakened",
+   "expected": "test-tamper (assertion-weakened); bug itself: none",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "test-tamper:test-integrity.assertion-weakened"
+   ],
+   "warned": [
+    "llm-review:llm.test-adequacy"
+   ],
+   "llm_stub_warn": [
+    "llm.test-adequacy"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.17,
+    "check": 22.79,
+    "ci": 23.14
+   }
+  },
+  {
+   "id": "D05",
+   "label": "defect",
+   "category": "test-integrity/skipped",
+   "expected": "test-tamper (test-skipped)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "test-tamper:test-integrity.test-skipped",
+    "coverage-drop:test-adequacy.coverage-drop",
+    "repo:test:unit"
+   ],
+   "warned": [
+    "llm-review:llm.test-integrity"
+   ],
+   "llm_stub_warn": [
+    "llm.test-integrity"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.67,
+    "check": 2.42,
+    "ci": 1.32
+   }
+  },
+  {
+   "id": "D06",
+   "label": "defect",
+   "category": "test-adequacy/tests-written-to-pass",
+   "expected": "diff-mutation (mutation-score)",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "coverage-drop:test-adequacy.coverage-drop",
+    "diff-mutation:test-adequacy.mutation-score"
+   ],
+   "warned": [
+    "llm-review:llm.test-adequacy"
+   ],
+   "llm_stub_warn": [
+    "llm.test-adequacy"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.57,
+    "check": 25.25,
+    "ci": 28.87
+   }
+  },
+  {
+   "id": "D07",
+   "label": "defect",
+   "category": "security/sql-injection",
+   "expected": "semgrep (gates.py.sql-string-formatting)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "semgrep:gates.py.sql-string-formatting"
+   ],
+   "warned": [
+    "llm-review:llm.security"
+   ],
+   "llm_stub_warn": [
+    "llm.security"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.57,
+    "check": 22.24,
+    "ci": 22.4
+   }
+  },
+  {
+   "id": "D08",
+   "label": "defect",
+   "category": "error-handling/swallowed",
+   "expected": "semgrep (gates.py.swallowed-broad-exception)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "semgrep:gates.py.swallowed-broad-exception",
+    "coverage-drop:test-adequacy.coverage-drop",
+    "repo:lint"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 0.12,
+    "check": 0.11,
+    "ci": 0.11
+   }
+  },
+  {
+   "id": "D09",
+   "label": "defect",
+   "category": "licence/copyleft-snippet",
+   "expected": "licence-check (copyleft-snippet)",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "licence-check:licence.copyleft-snippet"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.78,
+    "check": 23.55,
+    "ci": 21.54
+   }
+  },
+  {
+   "id": "D10",
+   "label": "defect",
+   "category": "scope/unrequested-change",
+   "expected": "scope-check (out-of-scope-file)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "scope-check:scope.out-of-scope-file"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.52,
+    "check": 23.95,
+    "ci": 27.92
+   }
+  },
+  {
+   "id": "D11",
+   "label": "defect",
+   "category": "test-adequacy/untested-module",
+   "expected": "coverage-drop + diff-mutation",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "coverage-drop:test-adequacy.coverage-drop",
+    "repo:test:unit"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.67,
+    "check": 2.32,
+    "ci": 1.32
+   }
+  },
+  {
+   "id": "D12",
+   "label": "defect",
+   "category": "correctness/boundary",
+   "expected": "repo unit tests (test_quantity_discount_thresholds)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "repo:test:unit"
+   ],
+   "warned": [
+    "coverage-drop:test-adequacy.coverage-error"
+   ],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 0.87,
+    "check": 1.97,
+    "ci": 1.02
+   }
+  },
+  {
+   "id": "D13",
+   "label": "defect",
+   "category": "correctness/edge-case-uncovered",
+   "expected": "EXPECTED MISS by deterministic gates (no test covers it)",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.42,
+    "check": 23.64,
+    "ci": 41.87
+   }
+  },
+  {
+   "id": "D14",
+   "label": "defect",
+   "category": "dependency/undeclared-import",
+   "expected": "dep-check (undeclared-import, warn) + pytest ImportError",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "repo:test:unit",
+    "repo:test:integration"
+   ],
+   "warned": [
+    "dep-check:dependency.undeclared-import",
+    "coverage-drop:test-adequacy.coverage-error"
+   ],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 0.82,
+    "check": 2.12,
+    "ci": 1.32
+   }
+  },
+  {
+   "id": "D15",
+   "label": "defect",
+   "category": "duplication/copy-paste",
+   "expected": "dup-check (warn only: duplication is not blocking)",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "coverage-drop:test-adequacy.coverage-drop",
+    "diff-mutation:test-adequacy.mutation-score"
+   ],
+   "warned": [
+    "dup-check:duplication.copied-block"
+   ],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.32,
+    "check": 23.6,
+    "ci": 24.0
+   }
+  },
+  {
+   "id": "D16",
+   "label": "defect",
+   "category": "test-integrity/config-weakened",
+   "expected": "test-tamper (test-config-weakened)",
+   "blocked_at": "L0",
+   "contract_rc": {
+    "check:fast": 201,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "test-tamper:test-integrity.test-config-weakened",
+    "scope-check:scope.out-of-scope-file"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.77,
+    "check": 23.04,
+    "ci": 23.6
+   }
+  },
+  {
+   "id": "D17",
+   "label": "defect",
+   "category": "secret/hard-coded",
+   "expected": "repo secrets task (gitleaks)",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "repo:secrets"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.93,
+    "check": 3.47,
+    "ci": 1.92
+   }
+  },
+  {
+   "id": "C01",
+   "label": "clean",
+   "category": "clean/refactor",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.52,
+    "check": 26.76,
+    "ci": 44.38
+   }
+  },
+  {
+   "id": "C02",
+   "label": "clean",
+   "category": "clean/docs",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 2.02,
+    "check": 23.6,
+    "ci": 27.01
+   }
+  },
+  {
+   "id": "C03",
+   "label": "clean",
+   "category": "clean/bugfix+regression-test",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.22,
+    "check": 32.53,
+    "ci": 51.72
+   }
+  },
+  {
+   "id": "C04",
+   "label": "clean",
+   "category": "clean/feature+tests",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 4.03,
+    "check": 24.8,
+    "ci": 42.22
+   }
+  },
+  {
+   "id": "C05",
+   "label": "clean",
+   "category": "clean/test-refactor",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [
+    "llm-review:llm.test-integrity"
+   ],
+   "llm_stub_warn": [
+    "llm.test-integrity"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.78,
+    "check": 23.2,
+    "ci": 25.66
+   }
+  },
+  {
+   "id": "C06",
+   "label": "clean",
+   "category": "clean/dead-code-removal",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [
+    "llm-review:llm.test-integrity"
+   ],
+   "llm_stub_warn": [
+    "llm.test-integrity"
+   ],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.67,
+    "check": 29.87,
+    "ci": 27.71
+   }
+  },
+  {
+   "id": "C07",
+   "label": "clean",
+   "category": "clean/dev-dependency",
+   "expected": "none",
+   "blocked_at": "L2",
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 201,
+    "ci": 201
+   },
+   "fired": [
+    "repo:audit"
+   ],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 4.78,
+    "check": 15.18,
+    "ci": 13.17
+   }
+  },
+  {
+   "id": "C08",
+   "label": "clean",
+   "category": "clean/logging",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.98,
+    "check": 22.8,
+    "ci": 27.02
+   }
+  },
+  {
+   "id": "C09",
+   "label": "clean",
+   "category": "clean/config",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.32,
+    "check": 23.55,
+    "ci": 26.87
+   }
+  },
+  {
+   "id": "C10",
+   "label": "clean",
+   "category": "clean/typing",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.07,
+    "check": 24.5,
+    "ci": 25.56
+   }
+  },
+  {
+   "id": "C11",
+   "label": "clean",
+   "category": "clean/expected-value-change-requested",
+   "expected": "none (expectation-changed is warn by design)",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.62,
+    "check": 23.35,
+    "ci": 25.41
+   }
+  },
+  {
+   "id": "A1",
+   "label": "clean",
+   "category": "clean/feature+tests (agent)",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 4.13,
+    "check": 28.52,
+    "ci": 53.21
+   }
+  },
+  {
+   "id": "A2",
+   "label": "clean",
+   "category": "clean/feature+tests (agent)",
+   "expected": "none",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.98,
+    "check": 23.35,
+    "ci": 50.16
+   }
+  },
+  {
+   "id": "A3",
+   "label": "clean",
+   "category": "clean/expected-value-change-requested (agent)",
+   "expected": "none (expectation-changed is warn by design)",
+   "blocked_at": null,
+   "contract_rc": {
+    "check:fast": 0,
+    "check": 0,
+    "ci": 0
+   },
+   "fired": [],
+   "warned": [
+    "test-tamper:test-integrity.expectation-changed",
+    "scope-check:scope.out-of-scope-test"
+   ],
+   "llm_stub_warn": [],
+   "llm_repeats_identical": true,
+   "wall": {
+    "check:fast": 3.37,
+    "check": 22.14,
+    "ci": 26.55
+   }
+  }
+ ],
+ "per_gate": {
+  "test-tamper": {
+   "fired_defect": [
+    "D03",
+    "D04",
+    "D05",
+    "D16"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": [
+    "A3",
+    "A3"
+   ]
+  },
+  "dep-check": {
+   "fired_defect": [
+    "D01",
+    "D02"
+   ],
+   "fired_clean": [],
+   "warn_defect": [
+    "D14",
+    "D14"
+   ],
+   "warn_clean": []
+  },
+  "semgrep-changed": {
+   "fired_defect": [
+    "D07",
+    "D08"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "semgrep": {
+   "fired_defect": [
+    "D07",
+    "D08"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "scope-check": {
+   "fired_defect": [
+    "D10",
+    "D16"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": [
+    "A3",
+    "A3"
+   ]
+  },
+  "licence-check": {
+   "fired_defect": [
+    "D09"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "dup-check": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [
+    "D15"
+   ],
+   "warn_clean": []
+  },
+  "coverage-drop": {
+   "fired_defect": [
+    "D03",
+    "D05",
+    "D06",
+    "D08",
+    "D11",
+    "D15"
+   ],
+   "fired_clean": [],
+   "warn_defect": [
+    "D01",
+    "D12",
+    "D14"
+   ],
+   "warn_clean": []
+  },
+  "diff-mutation": {
+   "fired_defect": [
+    "D06",
+    "D15"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "llm-review": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07"
+   ],
+   "warn_clean": [
+    "C05",
+    "C06"
+   ]
+  },
+  "lint": {
+   "fired_defect": [
+    "D03",
+    "D08"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "typecheck": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "test:unit": {
+   "fired_defect": [
+    "D01",
+    "D05",
+    "D11",
+    "D12",
+    "D14"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "build": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "secrets": {
+   "fired_defect": [
+    "D17"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "audit": {
+   "fired_defect": [],
+   "fired_clean": [
+    "C07"
+   ],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "sast": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "workflows": {
+   "fired_defect": [],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  },
+  "test:integration": {
+   "fired_defect": [
+    "D01",
+    "D14"
+   ],
+   "fired_clean": [],
+   "warn_defect": [],
+   "warn_clean": []
+  }
+ },
+ "walls": {
+  "check:fast": [
+   0.67,
+   1.82,
+   0.12,
+   3.17,
+   3.67,
+   3.57,
+   3.57,
+   0.12,
+   3.78,
+   3.52,
+   3.67,
+   0.87,
+   3.42,
+   0.82,
+   3.32,
+   3.77,
+   3.93,
+   3.52,
+   2.02,
+   3.22,
+   4.03,
+   3.78,
+   3.67,
+   4.78,
+   3.98,
+   3.32,
+   3.07,
+   3.62,
+   4.13,
+   3.98,
+   3.37
+  ],
+  "check": [
+   2.22,
+   23.45,
+   0.12,
+   22.79,
+   2.42,
+   25.25,
+   22.24,
+   0.11,
+   23.55,
+   23.95,
+   2.32,
+   1.97,
+   23.64,
+   2.12,
+   23.6,
+   23.04,
+   3.47,
+   26.76,
+   23.6,
+   32.53,
+   24.8,
+   23.2,
+   29.87,
+   15.18,
+   22.8,
+   23.55,
+   24.5,
+   23.35,
+   28.52,
+   23.35,
+   22.14
+  ],
+  "ci": [
+   1.07,
+   23.65,
+   0.32,
+   23.14,
+   1.32,
+   28.87,
+   22.4,
+   0.11,
+   21.54,
+   27.92,
+   1.32,
+   1.02,
+   41.87,
+   1.32,
+   24.0,
+   23.6,
+   1.92,
+   44.38,
+   27.01,
+   51.72,
+   42.22,
+   25.66,
+   27.71,
+   13.17,
+   27.02,
+   26.87,
+   25.56,
+   25.41,
+   53.21,
+   50.16,
+   26.55
+  ],
+  "gates:fast": [
+   3.93,
+   1.07,
+   2.87,
+   3.12,
+   3.07,
+   3.47,
+   3.12,
+   3.22,
+   3.07,
+   3.17,
+   3.42,
+   3.47,
+   3.07,
+   2.92,
+   3.48,
+   3.02,
+   3.12,
+   3.47,
+   1.12,
+   3.12,
+   3.22,
+   3.22,
+   3.07,
+   3.58,
+   3.22,
+   3.42,
+   2.92,
+   3.07,
+   3.37,
+   3.42,
+   3.32
+  ],
+  "gates:deterministic": [
+   6.08,
+   11.51,
+   11.1,
+   10.95,
+   11.1,
+   11.65,
+   10.9,
+   10.5,
+   11.55,
+   10.95,
+   10.65,
+   6.93,
+   11.35,
+   5.08,
+   11.25,
+   10.3,
+   11.0,
+   11.5,
+   11.1,
+   10.6,
+   11.51,
+   10.75,
+   10.95,
+   12.06,
+   10.9,
+   11.45,
+   10.9,
+   10.75,
+   11.5,
+   11.25,
+   11.3
+  ],
+  "gates:server": [
+   0.82,
+   0.97,
+   12.67,
+   9.0,
+   21.55,
+   23.51,
+   20.95,
+   1.17,
+   9.75,
+   21.29,
+   7.34,
+   3.63,
+   15.87,
+   0.82,
+   17.93,
+   8.8,
+   0.82,
+   12.51,
+   0.92,
+   9.65,
+   16.38,
+   0.82,
+   1.12,
+   6.84,
+   0.92,
+   0.82,
+   0.87,
+   0.82,
+   24.3,
+   16.53,
+   1.02
+  ]
+ }
+}

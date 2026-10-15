@@ -1,0 +1,12 @@
+# Project-local tool venv for the llm-code-gates research (never installed globally).
+# Cooldown policy: every pin was published >= 14 days before 2026-10-15 (same rule the kit's dep-age check enforces).
+zizmor==1.30.1
+ruff==0.16.9
+mypy==2.4.0
+pytest==9.1.1
+pytest-cov==7.1.0
+coverage==7.16.2
+mutmut==3.8.0
+hypothesis==6.168.3
+diff-cover==10.6.0
+jsonschema==4.26.0

@@ -1,0 +1,55 @@
+From 3aa5c6b240a9a28c60c62e5c6385159249ab7f3c Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] C01: Extract a helper for cent rounding; no behaviour change.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/pricing.py | 8 ++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..6a2cf8f
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C01)
++
++Extract a helper for cent rounding; no behaviour change.
++
++Scope: quotesvc/pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..a958077 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -17,6 +17,10 @@ MAX_WEIGHT_KG = WEIGHT_BANDS[-1][0]
+ CENT = Decimal("0.01")
+ 
+ 
++def to_cents(value: Decimal) -> Decimal:
++    return value.quantize(CENT, ROUND_HALF_UP)
++
++
+ class PricingError(ValueError):
+     pass
+ 
+@@ -54,12 +58,12 @@ def quote(weight_kg: Decimal, zone: str, quantity: int = 1, promo: str | None =
+         raise PricingError(f"unknown zone {zone!r}")
+     if quantity < 1:
+         raise PricingError("quantity must be at least 1")
+-    unit = (band_price(weight_kg) * ZONE_MULTIPLIER[zone]).quantize(CENT, ROUND_HALF_UP)
++    unit = to_cents(band_price(weight_kg) * ZONE_MULTIPLIER[zone])
+     subtotal = unit * quantity
+     rate = quantity_discount(quantity)
+     if promo is not None:
+         if promo not in PROMO_CODES:
+             raise PricingError("unknown promo code")
+         rate = max(rate, PROMO_CODES[promo])  # discounts do not stack: the larger one wins
+-    discount = (subtotal * rate).quantize(CENT, ROUND_HALF_UP)
++    discount = to_cents(subtotal * rate)
+     return Quote(unit, quantity, subtotal, discount, subtotal - discount)
+-- 
+2.43.0
+

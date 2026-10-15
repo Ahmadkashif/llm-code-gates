@@ -1,0 +1,194 @@
+# llm-code-gates vendored Semgrep rules (MIT, written for this kit; no Semgrep Registry rules are copied).
+# Patterns that LLM-written Python reproduces often (RQ1: insecure defaults, copied vulnerable patterns,
+# over-broad exception handling, placeholder code). Run offline: semgrep scan --config gates/semgrep --metrics=off
+# Each rule has annotated positive/negative cases in llm-python.py (semgrep --test gates/semgrep).
+rules:
+  - id: gates.py.swallowed-broad-exception
+    languages: [python]
+    severity: ERROR
+    message: >-
+      Broad exception swallowed (except/except Exception with only pass/continue/return None). Errors vanish
+      silently. Catch the specific exception, or log and re-raise.
+    metadata: {category: error-handling, gates_severity: medium, cwe: "CWE-396"}
+    patterns:
+      - pattern-either:
+          - pattern: |
+              try:
+                  ...
+              except:
+                  $BODY
+          - pattern: |
+              try:
+                  ...
+              except Exception:
+                  $BODY
+          - pattern: |
+              try:
+                  ...
+              except Exception as $E:
+                  $BODY
+          - pattern: |
+              try:
+                  ...
+              except BaseException:
+                  $BODY
+      - metavariable-pattern:
+          metavariable: $BODY
+          pattern-either:
+            - pattern: pass
+            - pattern: continue
+            - pattern: return None
+            - pattern: return
+
+  - id: gates.py.tls-verify-disabled
+    languages: [python]
+    severity: ERROR
+    message: TLS certificate verification disabled. Never ship verify=False / unverified SSL contexts.
+    metadata: {category: security, gates_severity: high, cwe: "CWE-295"}
+    pattern-either:
+      - pattern: $X.$METHOD(..., verify=False, ...)
+      - pattern: ssl._create_unverified_context(...)
+      - pattern: $CTX.check_hostname = False
+      - pattern: $CTX.verify_mode = ssl.CERT_NONE
+
+  - id: gates.py.subprocess-shell-injection
+    languages: [python]
+    severity: ERROR
+    message: subprocess with shell=True and a dynamically built command string. Pass an argument list instead.
+    metadata: {category: security, gates_severity: high, cwe: "CWE-78"}
+    patterns:
+      - pattern-either:
+          - pattern: subprocess.$F($CMD, ..., shell=True, ...)
+          - pattern: os.system($CMD)
+          - pattern: os.popen($CMD, ...)
+      - pattern-not: subprocess.$F("...", ..., shell=True, ...)
+      - pattern-not: os.system("...")
+      - pattern-not: os.popen("...", ...)
+
+  - id: gates.py.sql-string-formatting
+    languages: [python]
+    severity: ERROR
+    message: SQL built with string formatting/concatenation. Use parameter placeholders.
+    metadata: {category: security, gates_severity: high, cwe: "CWE-89"}
+    pattern-either:
+      - pattern: $C.execute(f"...", ...)
+      - pattern: $C.execute("..." % $X, ...)
+      - pattern: $C.execute("..." + $X, ...)
+      - pattern: $C.execute("...".format(...), ...)
+      - pattern: $C.executemany(f"...", ...)
+      - pattern: $C.executescript(f"...")
+
+  - id: gates.py.unsafe-deserialisation
+    languages: [python]
+    severity: ERROR
+    message: Unsafe deserialisation (pickle/marshal/yaml.load without SafeLoader). Use json or yaml.safe_load.
+    metadata: {category: security, gates_severity: high, cwe: "CWE-502"}
+    pattern-either:
+      - pattern: pickle.loads(...)
+      - pattern: pickle.load(...)
+      - pattern: marshal.loads(...)
+      - patterns:
+          - pattern: yaml.load(...)
+          - pattern-not: yaml.load(..., Loader=yaml.SafeLoader, ...)
+          - pattern-not: yaml.load(..., Loader=yaml.CSafeLoader, ...)
+
+  - id: gates.py.eval-exec
+    languages: [python]
+    severity: ERROR
+    message: eval/exec on a non-literal. Parse the input instead (ast.literal_eval, json).
+    metadata: {category: security, gates_severity: high, cwe: "CWE-95"}
+    patterns:
+      - pattern-either:
+          - pattern: eval($X, ...)
+          - pattern: exec($X, ...)
+      - pattern-not: eval("...", ...)
+      - pattern-not: exec("...", ...)
+
+  - id: gates.py.weak-random-for-secrets
+    languages: [python]
+    severity: WARNING
+    message: random module used to make a token/password/key. Use the secrets module.
+    metadata: {category: security, gates_severity: medium, cwe: "CWE-338"}
+    patterns:
+      - pattern-inside: |
+          $NAME = <... random.$F(...) ...>
+      - metavariable-regex:
+          metavariable: $NAME
+          regex: (?i).*(token|secret|password|passwd|api_?key|nonce|salt|otp).*
+
+  - id: gates.py.weak-hash-for-passwords
+    languages: [python]
+    severity: ERROR
+    message: Fast hash (md5/sha1/sha256) used for a password. Use hashlib.scrypt/pbkdf2_hmac or a KDF library.
+    metadata: {category: security, gates_severity: high, cwe: "CWE-916"}
+    patterns:
+      - pattern-either:
+          - pattern: hashlib.$H(<... $PW ...>)
+          - pattern: hashlib.$H(<... $PW ...>).hexdigest()
+      - metavariable-regex:
+          metavariable: $H
+          regex: ^(md5|sha1|sha256|sha512)$
+      - metavariable-regex:
+          metavariable: $PW
+          regex: (?i).*(password|passwd|pwd).*
+
+  - id: gates.py.flask-debug-or-bind-all
+    languages: [python]
+    severity: WARNING
+    message: Debug mode enabled in an app.run call. Never default to debug=True.
+    metadata: {category: security, gates_severity: medium, cwe: "CWE-489"}
+    pattern: $APP.run(..., debug=True, ...)
+
+  - id: gates.py.placeholder-implementation
+    languages: [python]
+    severity: WARNING
+    message: >-
+      Placeholder left in shipped code (TODO-implement / NotImplementedError / pass-only body in a non-abstract
+      function). LLMs leave stubs that tests may not reach.
+    metadata: {category: correctness, gates_severity: medium}
+    patterns:
+      - pattern-either:
+          - pattern: |
+              def $F(...):
+                  raise NotImplementedError(...)
+          - pattern: |
+              def $F(...):
+                  raise NotImplementedError
+      - pattern-not-inside: |
+          class $C(..., ABC, ...):
+              ...
+      - pattern-not-inside: |
+          @abc.abstractmethod
+          def $F(...):
+              ...
+      - pattern-not-inside: |
+          @abstractmethod
+          def $F(...):
+              ...
+    paths:
+      exclude: ["tests/", "test_*.py", "*_test.py"]
+
+  - id: gates.py.assert-for-validation
+    languages: [python]
+    severity: WARNING
+    message: assert used for input/auth validation in non-test code; asserts vanish under python -O.
+    metadata: {category: correctness, gates_severity: low, cwe: "CWE-617"}
+    patterns:
+      - pattern: assert $COND, ...
+      - pattern-inside: |
+          def $F(..., $ARG, ...):
+              ...
+      - metavariable-regex:
+          metavariable: $ARG
+          regex: (?i)^(request|req|user|payload|data|token|params|body)$
+    paths:
+      exclude: ["tests/", "test_*.py", "*_test.py", "conftest.py"]
+
+  - id: gates.py.hardcoded-tmp-path
+    languages: [python]
+    severity: WARNING
+    message: Insecure temp file (tempfile.mktemp or a fixed /tmp path). Use tempfile.NamedTemporaryFile/mkstemp.
+    metadata: {category: security, gates_severity: low, cwe: "CWE-377"}
+    pattern-either:
+      - pattern: tempfile.mktemp(...)
+      - pattern: open("=~/^\/tmp\//", ...)

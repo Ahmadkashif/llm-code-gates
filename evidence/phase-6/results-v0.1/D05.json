@@ -1,0 +1,276 @@
+{
+ "id": "D05",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.72
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 2.27
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 1.17
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.02,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.29,
+     "findings": [
+      {
+       "rule": "test-integrity.test-skipped",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_validation.py",
+       "line": 31,
+       "suppressed": false,
+       "fingerprint": "7329ba9916d68a02"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.09,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.17,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 9.74,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.44,
+     "findings": [
+      {
+       "rule": "test-integrity.test-skipped",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_validation.py",
+       "line": 31,
+       "suppressed": false,
+       "fingerprint": "7329ba9916d68a02"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.31,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 1.59,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 6.64,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 17.11,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 16.57,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/validation.py",
+       "line": 31,
+       "suppressed": false,
+       "fingerprint": "793c4caa5b62c81c"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/validation.py",
+       "line": 9,
+       "suppressed": false,
+       "fingerprint": "fa4d7720f23bd23d"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.3,
+     "findings": [
+      {
+       "rule": "llm.test-integrity",
+       "category": "test-integrity",
+       "level": "warn",
+       "severity": "high",
+       "path": "tests/test_validation.py",
+       "line": 17,
+       "suppressed": false,
+       "fingerprint": "3377a9ced21296ef"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:unit": {
+   "rc": 201,
+   "wall_s": 0.92
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.67
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.14
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.52
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.62
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_validation.py",
+     "line": 17,
+     "suppressed": false,
+     "fingerprint": "3377a9ced21296ef"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.11,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_validation.py",
+     "line": 17,
+     "suppressed": false,
+     "fingerprint": "3377a9ced21296ef"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.11,
+   "findings": [
+    {
+     "rule": "llm.test-integrity",
+     "category": "test-integrity",
+     "level": "warn",
+     "severity": "high",
+     "path": "tests/test_validation.py",
+     "line": 17,
+     "suppressed": false,
+     "fingerprint": "3377a9ced21296ef"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  }
+ ]
+}

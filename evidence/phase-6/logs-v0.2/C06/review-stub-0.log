@@ -1,0 +1,4 @@
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 1, "baselined": 0, "wall_s": 0.02}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-integrity (high) tests/test_store.py:11 — assertion removed from tests — Input/state: the checked behaviour regresses -> executes old line 11 (now gone) -> actual: suite passes -> expected: suite fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0

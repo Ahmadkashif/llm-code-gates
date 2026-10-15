@@ -1,0 +1,14 @@
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 6 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.42s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: [build] python3 -m compileall -q quotesvc
+task: [secrets] gitleaks git --redact --no-banner --log-opts='main..HEAD'
+[90m1:37PM[0m [32mINF[0m [1m1 commits scanned.[0m
+[90m1:37PM[0m [32mINF[0m [1mscanned ~174 bytes (174 bytes) in 367ms[0m
+[90m1:37PM[0m [33mWRN[0m [1mleaks found: 1[0m
+task: Failed to run task "ci": task: Failed to run task "check": task: Failed to run task "secrets": exit status 1

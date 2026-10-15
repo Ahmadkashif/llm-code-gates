@@ -1,0 +1,55 @@
+From 00ab1c5ae8fb1b95a1d49c0eef5adf92a834832e Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D09: Add a banker's-rounding helper for money.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/money.py   | 7 +++++++
+ tests/test_money.py | 8 ++++++++
+ 3 files changed, 20 insertions(+)
+ create mode 100644 .gates/task.md
+ create mode 100644 quotesvc/money.py
+ create mode 100644 tests/test_money.py
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..f69c433
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D09)
++
++Add a banker's-rounding helper for money.
++
++Scope: quotesvc/money.py, tests/test_money.py
+diff --git a/quotesvc/money.py b/quotesvc/money.py
+new file mode 100644
+index 0000000..c7fed4e
+--- /dev/null
++++ b/quotesvc/money.py
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-3.0-or-later
++# Adapted from an open-source accounting library.
++from decimal import ROUND_HALF_EVEN, Decimal
++
++
++def bankers_round(value: Decimal) -> Decimal:
++    return value.quantize(Decimal("0.01"), ROUND_HALF_EVEN)
+diff --git a/tests/test_money.py b/tests/test_money.py
+new file mode 100644
+index 0000000..fd00a87
+--- /dev/null
++++ b/tests/test_money.py
+@@ -0,0 +1,8 @@
++from decimal import Decimal as D
++
++from quotesvc.money import bankers_round
++
++
++def test_bankers_round():
++    assert bankers_round(D("2.675")) == D("2.68")
++    assert bankers_round(D("2.665")) == D("2.66")
+-- 
+2.43.0
+

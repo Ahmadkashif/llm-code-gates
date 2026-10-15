@@ -1,0 +1,31 @@
+[project]
+name = "parcel-quote"
+version = "0.1.0"
+description = "Synthetic shipping-quote service used to verify llm-code-gates"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+addopts = "-q -p no:cacheprovider"
+markers = ["integration: needs a real HTTP server"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["quotesvc"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 75
+show_missing = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["gates"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "BLE", "S110", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

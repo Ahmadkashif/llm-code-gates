@@ -1,0 +1,12 @@
+# Q12: contract task names before (a846a59, pre-kit) and after (370a061, kit adopted) — must be a superset, none renamed
+## before
+check:fast check lint typecheck test:unit build secrets audit sast workflows test:integration ci image 
+## after (top-level keys incl. the 'gates' include)
+gates check:fast check lint typecheck test:unit build secrets audit sast workflows test:integration ci image 
+## included namespace
+gates:fast gates:deterministic gates:mutation gates:llm-review gates:server gates:report gates:selftest gates:render 
+
+## contract tasks that call kit tasks
+26:      - task: gates:fast
+40:      - task: gates:deterministic
+71:      - task: gates:server

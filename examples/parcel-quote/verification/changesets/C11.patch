@@ -1,0 +1,55 @@
+From 777e1052f9f8beb5b9ffa3daebe24db4750c33cc Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C11: Raise the world zone multiplier from 2.75 to 2.90 and
+ update the expected prices.
+
+---
+ .gates/task.md        | 5 +++++
+ quotesvc/pricing.py   | 2 +-
+ tests/test_pricing.py | 4 ++--
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..0a292bd
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C11)
++
++Raise the world zone multiplier from 2.75 to 2.90 and update the expected prices.
++
++Scope: quotesvc/pricing.py, tests/test_pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..a0519a8 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -11,7 +11,7 @@ WEIGHT_BANDS: list[tuple[Decimal, Decimal]] = [
+     (Decimal("10"), Decimal("9.80")),
+     (Decimal("30"), Decimal("19.00")),
+ ]
+-ZONE_MULTIPLIER = {"domestic": Decimal("1.00"), "eu": Decimal("1.60"), "world": Decimal("2.75")}
++ZONE_MULTIPLIER = {"domestic": Decimal("1.00"), "eu": Decimal("1.60"), "world": Decimal("2.90")}
+ PROMO_CODES = {"WELCOME10": Decimal("0.10"), "BULK5": Decimal("0.05")}
+ MAX_WEIGHT_KG = WEIGHT_BANDS[-1][0]
+ CENT = Decimal("0.01")
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..9040243 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -33,8 +33,8 @@ def test_quote_zone_and_rounding():
+     assert q.unit_price == D("8.80")
+     assert q.total == D("8.80")
+     w = quote(D("0.3"), "world", 3)
+-    assert w.unit_price == D("10.73")  # 3.90 * 2.75 = 10.725 -> half up
+-    assert w.subtotal == D("32.19")
++    assert w.unit_price == D("11.31")  # 3.90 * 2.90 = 11.31
++    assert w.subtotal == D("33.93")
+ 
+ 
+ def test_quote_promo_does_not_stack():
+-- 
+2.43.0
+

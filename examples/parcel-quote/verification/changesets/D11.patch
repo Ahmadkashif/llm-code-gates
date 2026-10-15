@@ -1,0 +1,60 @@
+From 0bf620c191aaf62a5d894d3b6800a7fc8d42e0b0 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D11: Add CSV export of stored quotes.
+
+---
+ .gates/task.md     |  5 +++++
+ quotesvc/export.py | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+ create mode 100644 .gates/task.md
+ create mode 100644 quotesvc/export.py
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..503f4ad
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D11)
++
++Add CSV export of stored quotes.
++
++Scope: quotesvc/export.py, quotesvc/store.py
+diff --git a/quotesvc/export.py b/quotesvc/export.py
+new file mode 100644
+index 0000000..7a98f6a
+--- /dev/null
++++ b/quotesvc/export.py
+@@ -0,0 +1,28 @@
++"""CSV export of quotes."""
++from __future__ import annotations
++
++import csv
++import io
++
++
++def to_csv(rows: list[dict]) -> str:
++    out = io.StringIO()
++    w = csv.writer(out)
++    w.writerow(["id", "zone", "quantity", "total"])
++    total = 0
++    for r in rows:
++        w.writerow([r["id"], r["zone"], r["quantity"], r["total"]])
++        total += int(r["quantity"])
++    if total > 100:
++        w.writerow(["", "", total, "bulk"])
++    else:
++        w.writerow(["", "", total, ""])
++    return out.getvalue()
++
++
++def summary(rows: list[dict]) -> dict:
++    zones: dict[str, int] = {}
++    for r in rows:
++        zones[r["zone"]] = zones.get(r["zone"], 0) + 1
++    busiest = max(zones, key=lambda z: zones[z]) if zones else None
++    return {"count": len(rows), "zones": zones, "busiest": busiest}
+-- 
+2.43.0
+

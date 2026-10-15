@@ -1,0 +1,44 @@
+# llm-code-gates for GitHub Actions (#3's GitHub hybrid lane, or github.com-hosted runners). Same Taskfile contract;
+# adds: job summary (GitHub supports $GITHUB_STEP_SUMMARY), artifact upload, and optional SARIF upload (code scanning
+# on private repos needs GitHub Code Security). All actions pinned by full commit SHA.
+name: ci-gates-example
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write   # only needed for the optional SARIF upload
+    env:
+      BASE_REF: origin/${{ github.base_ref || 'main' }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: task ci (deterministic gates block; LLM review is advisory and exits 0)
+        run: task ci BASE_REF="$BASE_REF"
+      - name: gates summary
+        if: ${{ !cancelled() }}
+        run: |
+          { cat .gates/out/llm-review.md 2>/dev/null || echo "no LLM review output"; } >> "$GITHUB_STEP_SUMMARY"
+      - name: upload gates reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: gates-reports
+          path: .gates/out/
+          retention-days: 14
+      - name: upload SARIF (optional; code scanning)
+        if: ${{ !cancelled() && hashFiles('.gates/out/gates-server.sarif') != '' }}
+        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd # v4.38.1
+        with:
+          sarif_file: .gates/out/gates-server.sarif
+          category: llm-code-gates

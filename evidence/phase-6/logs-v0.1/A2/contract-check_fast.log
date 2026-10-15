@@ -1,0 +1,20 @@
+task: [check:fast] [ -z "quotesvc/pricing.py tests/test_app.py tests/test_pricing.py " ] || python3 -m ruff check quotesvc/pricing.py tests/test_app.py tests/test_pricing.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+..........................                                               [100%]
+26 passed, 5 deselected in 0.24s
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/A2/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 2}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/A2/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 3, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/A2/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 3, "lines": 25, "scope": ["quotesvc/pricing.py", "quotesvc/app.py"]}
+
+=== gates:fast passed in 2.61s [test-tamper 0.13s rc=0] [dep-check 0.3s rc=0] [semgrep-changed 2.11s rc=0] [scope-check 0.08s rc=0]

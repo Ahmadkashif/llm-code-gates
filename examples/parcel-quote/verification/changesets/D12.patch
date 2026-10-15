@@ -1,0 +1,38 @@
+From 7ceb4656afdac7961e2424dd0d8c27893f6d7699 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D12: Tidy the quantity discount code.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/pricing.py | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..4de24a5
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D12)
++
++Tidy the quantity discount code.
++
++Scope: quotesvc/pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..4b91b44 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -42,7 +42,7 @@ def band_price(weight_kg: Decimal) -> Decimal:
+ 
+ def quantity_discount(quantity: int) -> Decimal:
+     """Fractional discount for multi-parcel orders: 10+ parcels 5%, 50+ parcels 12%."""
+-    if quantity >= 50:
++    if quantity > 50:
+         return Decimal("0.12")
+     if quantity >= 10:
+         return Decimal("0.05")
+-- 
+2.43.0
+

@@ -1,0 +1,244 @@
+{
+ "id": "D04",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.52
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 23.65
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 27.31
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.27,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.41,
+     "findings": [
+      {
+       "rule": "test-integrity.assertion-weakened",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 31,
+       "suppressed": false,
+       "fingerprint": "12a4a720db3f5999"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.32,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.34,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.6,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.45,
+     "findings": [
+      {
+       "rule": "test-integrity.assertion-weakened",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "tests/test_pricing.py",
+       "line": 31,
+       "suppressed": false,
+       "fingerprint": "12a4a720db3f5999"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.26,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.12,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 6.89,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 5.18,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 4.67,
+     "findings": []
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": [
+      {
+       "rule": "llm.test-adequacy",
+       "category": "test-adequacy",
+       "level": "warn",
+       "severity": "medium",
+       "path": "tests/test_pricing.py",
+       "line": 36,
+       "suppressed": false,
+       "fingerprint": "997ca13d6fbe177d"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 0.92
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.57
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.4
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.67
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.12
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.78
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "997ca13d6fbe177d"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.42,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "997ca13d6fbe177d"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "997ca13d6fbe177d"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  }
+ ]
+}

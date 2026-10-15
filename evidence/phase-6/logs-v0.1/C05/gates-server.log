@@ -1,0 +1,13 @@
+task: [gates:server] python3 gates/run.py server --base main
+
+--- gates:server -> diff-mutation: <research>/phase-6/wt/C05/gates/checks/diff_mutation.py --base main
+== gates/diff-mutation: 1 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 0, "candidates": 0}
+   [INFORM] test-adequacy.mutation-skipped (info)  — no mutable code on added lines
+
+--- gates:server -> llm-review: <research>/phase-6/wt/C05/gates/review/llm_review.py --base main
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 1, "chunks": 1, "model": "stub-judge", "calls": 13, "raw": 3, "grounded": 3, "after_votes": 1, "after_dedup": 1, "reported": 1, "baselined": 0, "wall_s": 0.03}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-integrity (high) tests/test_pricing.py:11 — assertion removed from tests — Input/state: the checked behaviour regresses -> executes old line 11 (now gone) -> actual: suite passes -> expected: suite fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+
+=== gates:server passed in 0.5s [diff-mutation 0.31s rc=0] [llm-review 0.19s rc=0]

@@ -1,0 +1,63 @@
+From 9253839e9a82db4a497483f30803495ec1b2e749 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] C04: Add GET /v1/zones listing the zones and their
+ multipliers.
+
+---
+ .gates/task.md    | 5 +++++
+ quotesvc/app.py   | 4 +++-
+ tests/test_app.py | 6 ++++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..36339e6
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C04)
++
++Add GET /v1/zones listing the zones and their multipliers.
++
++Scope: quotesvc/app.py, tests/test_app.py
+diff --git a/quotesvc/app.py b/quotesvc/app.py
+index ba770c4..1bdb883 100644
+--- a/quotesvc/app.py
++++ b/quotesvc/app.py
+@@ -6,7 +6,7 @@ import os
+ import re
+ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+ 
+-from .pricing import PricingError, quote
++from .pricing import ZONE_MULTIPLIER, PricingError, quote
+ from .ratelimit import TokenBucket
+ from .store import QuoteStore
+ from .validation import ValidationError, parse_request
+@@ -33,6 +33,8 @@ def make_handler(store: QuoteStore, limiter: TokenBucket):
+         def do_GET(self):
+             if self.path == "/up":
+                 return self._send(200, {"status": "ok"})
++            if self.path == "/v1/zones":
++                return self._send(200, {z: str(m) for z, m in sorted(ZONE_MULTIPLIER.items())})
+             m = QUOTE_PATH.match(self.path)
+             if m:
+                 q = store.get(m.group(1))
+diff --git a/tests/test_app.py b/tests/test_app.py
+index fa0f315..7cc0eee 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -60,3 +60,9 @@ def test_rate_limit():
+         assert call(url, {"weight_kg": 1, "zone": "eu"})[0] == 429
+     finally:
+         srv.shutdown()
++
++
++def test_zones(base_url):
++    code, body = call(base_url + "/v1/zones")
++    assert code == 200
++    assert body == {"domestic": "1.00", "eu": "1.60", "world": "2.75"}
+-- 
+2.43.0
+

@@ -1,0 +1,22 @@
+task: [check:fast] [ -z "quotesvc/validation.py tests/test_validation.py " ] || python3 -m ruff check quotesvc/validation.py tests/test_validation.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+..............sssssssssss                                                [100%]
+14 passed, 11 skipped, 4 deselected in 0.26s
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D05/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "test_files_compared": 1}
+   [BLOCK] test-integrity.test-skipped (high) tests/test_validation.py:31 — test test_invalid_requests is now skipped/xfail
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D05/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 2, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D05/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 2, "lines": 10, "scope": ["quotesvc/validation.py"]}
+
+=== gates:fast FAILED: test-tamper in 2.8s [test-tamper 0.22s rc=1] [dep-check 0.36s rc=0] [semgrep-changed 2.12s rc=0] [scope-check 0.09s rc=0]
+task: Failed to run task "check:fast": task: Failed to run task "gates:fast": exit status 1

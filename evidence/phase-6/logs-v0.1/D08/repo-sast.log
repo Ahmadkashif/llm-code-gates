@@ -1,0 +1,1 @@
+task: [sast] semgrep scan --config .semgrep/ --error --metrics=off --quiet --disable-version-check --exclude gates

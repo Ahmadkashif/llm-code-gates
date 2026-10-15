@@ -1,0 +1,222 @@
+{
+ "id": "D15",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 3.83
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 24.2
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 23.05
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 3.58,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.4,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.37,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.3,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.8,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.46,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.26,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.12,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.32,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": [
+      {
+       "rule": "duplication.copied-block",
+       "category": "duplication",
+       "level": "warn",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 45,
+       "suppressed": false,
+       "fingerprint": "0477c9f231ee5421"
+      }
+     ]
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 7.03,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 201,
+   "wall_s": 14.77,
+   "checks": {
+    "diff-mutation": {
+     "rc": 1,
+     "wall_s": 14.08,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 45,
+       "suppressed": false,
+       "fingerprint": "c11650173229cb4f"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 48,
+       "suppressed": false,
+       "fingerprint": "c11650173229cb4f"
+      },
+      {
+       "rule": "test-adequacy.mutation-score",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "fbe31a5c9838c40e"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.15,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.17
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.37
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.32
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.42
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.1
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.17
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.83
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 13,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+task: [lint] python3 -m ruff check .
+F401 [*] `quotesvc.pricing.quantity_discount` imported but unused
+ --> tests/test_pricing.py:7:56
+  |
+5 | from hypothesis import strategies as st
+6 |
+7 | from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
+  |                                                        ^^^^^^^^^^^^^^^^^
+help: Remove unused import: `quotesvc.pricing.quantity_discount`
+  |
+6 |
+  - from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
+7 + from quotesvc.pricing import PricingError, band_price, quote
+8 |
+  |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
+task: Failed to run task "check": task: Failed to run task "lint": exit status 1

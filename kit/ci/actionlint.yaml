@@ -1,0 +1,3 @@
+# actionlint config for the kit's CI snippets: Forgejo runner labels from #3 (ci/review/deploy lanes).
+self-hosted-runner:
+  labels: [ci, review, deploy, home]

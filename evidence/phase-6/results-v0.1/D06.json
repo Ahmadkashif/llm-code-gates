@@ -1,0 +1,314 @@
+{
+ "id": "D06",
+ "contract": {
+  "check:fast": {
+   "rc": 0,
+   "wall_s": 2.42
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 24.33
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 20.03
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 0,
+   "wall_s": 1.97,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 1.59,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.09,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 7.98,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 1.52,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.05,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 1,
+     "wall_s": 6.01,
+     "findings": [
+      {
+       "rule": "test-adequacy.coverage-drop",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "b40fa800779d82a2"
+      }
+     ]
+    }
+   }
+  },
+  "server": {
+   "rc": 201,
+   "wall_s": 24.62,
+   "checks": {
+    "diff-mutation": {
+     "rc": 1,
+     "wall_s": 24.42,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 54,
+       "suppressed": false,
+       "fingerprint": "c11650173229cb4f"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 56,
+       "suppressed": false,
+       "fingerprint": "791a6dfd69b09bfb"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 54,
+       "suppressed": false,
+       "fingerprint": "4e27cd6edd7ab4aa"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 56,
+       "suppressed": false,
+       "fingerprint": "bb1554bc631eb5c6"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 58,
+       "suppressed": false,
+       "fingerprint": "549d1b049668aa9c"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 55,
+       "suppressed": false,
+       "fingerprint": "e8e389e8c28e1fcb"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/pricing.py",
+       "line": 57,
+       "suppressed": false,
+       "fingerprint": "e8e389e8c28e1fcb"
+      },
+      {
+       "rule": "test-adequacy.mutation-score",
+       "category": "test-adequacy",
+       "level": "block",
+       "severity": "high",
+       "path": "",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "fbe31a5c9838c40e"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": [
+      {
+       "rule": "llm.test-adequacy",
+       "category": "test-adequacy",
+       "level": "warn",
+       "severity": "medium",
+       "path": "tests/test_pricing.py",
+       "line": 62,
+       "suppressed": false,
+       "fingerprint": "1a234e014f322403"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 0.97
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.08
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.72
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.22
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.82
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.42,
+   "findings": [
+    {
+     "rule": "llm.test-adequacy",
+     "category": "test-adequacy",
+     "level": "warn",
+     "severity": "medium",
+     "path": "tests/test_pricing.py",
+     "line": 62,
+     "suppressed": false,
+     "fingerprint": "1a234e014f322403"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "off-category",
+    "off-category",
+    "off-category",
+    "refuted"
+   ]
+  }
+ ]
+}

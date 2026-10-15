@@ -1,0 +1,71 @@
+From 28d2a794ee7b1174d58024e50a9f229636b8be80 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D06: Add optional parcel insurance: fee is 1% of declared
+ value, minimum 0.50, maximum 25.00, free above 2000.
+
+---
+ .gates/task.md        |  5 +++++
+ quotesvc/pricing.py   | 10 ++++++++++
+ tests/test_pricing.py |  8 +++++++-
+ 3 files changed, 22 insertions(+), 1 deletion(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..d0d4630
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D06)
++
++Add optional parcel insurance: fee is 1% of declared value, minimum 0.50, maximum 25.00, free above 2000.
++
++Scope: quotesvc/pricing.py, tests/test_pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..e22468e 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -49,6 +49,16 @@ def quantity_discount(quantity: int) -> Decimal:
+     return Decimal("0")
+ 
+ 
++def insurance_fee(declared_value: Decimal) -> Decimal:
++    """1% of the declared value, at least 0.50 and at most 25.00; free for declared values above 2000."""
++    if declared_value <= 0:
++        return Decimal("0")
++    if declared_value > 2000:
++        return Decimal("0")
++    fee = (declared_value * Decimal("0.01")).quantize(CENT, ROUND_HALF_UP)
++    return min(max(fee, Decimal("0.50")), Decimal("25.00"))
++
++
+ def quote(weight_kg: Decimal, zone: str, quantity: int = 1, promo: str | None = None) -> Quote:
+     if zone not in ZONE_MULTIPLIER:
+         raise PricingError(f"unknown zone {zone!r}")
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index 312a0cb..f25e3fb 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -4,7 +4,7 @@ import pytest
+ from hypothesis import given
+ from hypothesis import strategies as st
+ 
+-from quotesvc.pricing import PricingError, band_price, quantity_discount, quote
++from quotesvc.pricing import PricingError, band_price, insurance_fee, quantity_discount, quote
+ 
+ 
+ def test_band_boundaries_are_inclusive():
+@@ -55,3 +55,9 @@ def test_quote_rejects_bad_zone_and_quantity():
+ @given(st.decimals(min_value=D("0.01"), max_value=D("29.99"), places=2), st.sampled_from(["domestic", "eu", "world"]))
+ def test_price_is_monotonic_in_weight(w, zone):
+     assert quote(w, zone).total <= quote(w + D("0.01"), zone).total
++
++
++def test_insurance_fee_returns_decimal():
++    fee = insurance_fee(D("100"))
++    assert fee is not None
++    assert isinstance(fee, D)
+-- 
+2.43.0
+

@@ -1,0 +1,34 @@
+# Q15: the stub judge makes the kit testable with no model and no network.
+# Guard: PYTHONPATH=<dir with sitecustomize.py> installs an audit hook that aborts on any non-loopback connect or DNS lookup;
+# http(s)_proxy point at a dead local port as a second net for child processes. Loopback stays allowed (mock-endpoint tests).
+
+# 0. guard self-test: a real outbound request must be blocked
+OFFLINE GUARD: blocked DNS lookup of 'pypi.org'
+exit=1
+
+# 1. stub review of cs/D07 (3 repeats), offline
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.01}
+   [WARN] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+   findings-file sha256: bf9373fa1a01f988
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.01}
+   [WARN] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+   findings-file sha256: bf9373fa1a01f988
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.01}
+   [WARN] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0
+   findings-file sha256: bf9373fa1a01f988
+
+# 2. the whole kit self-test, offline (registry fixture, stub judge, mock endpoint on loopback)
+#    (first attempt failed 1 test: the dead http_proxy also captured loopback calls to the mock; urllib honours *_proxy, so no_proxy=127.0.0.1,localhost is set — the same applies to a real gateway behind a proxy)
+----------------------------------------------------------------------
+Ran 27 tests in 60.515s
+
+OK
+
+# 3. re-run with the final kit v0.2 (sample main 890f779), offline
+----------------------------------------------------------------------
+Ran 28 tests in 84.778s
+
+OK

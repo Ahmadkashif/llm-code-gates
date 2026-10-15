@@ -1,0 +1,27 @@
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/D01/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/D01/gates/checks/dep_check.py --base main
+== gates/dep-check: 1 finding(s), 1 blocking | {"base": "890f7797c930", "deps_checked": 1, "registry_lookups": 0, "min_age_days": 30.0}
+   [BLOCK] dependency.not-on-registry (critical) requirements.txt — pypi package 'pyquote-currency-utils' does not exist on the registry (hallucinated name? anyone could register it later)
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/D01/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/D01/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 2, "lines": 8, "scope": ["quotesvc/pricing.py", "requirements.txt"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/D01/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "890f7797c930"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/D01/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/D01/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 1 finding(s), 0 blocking
+   [WARN] test-adequacy.coverage-error (medium)  — could not measure coverage at HEAD
+
+=== gates:deterministic FAILED: dep-check in 5.58s [test-tamper 0.44s rc=0] [dep-check 0.28s rc=1] [semgrep 2.18s rc=0] [scope-check 0.08s rc=0] [licence-check 1.04s rc=0] [dup-check 0.35s rc=0] [coverage-drop 1.22s rc=0]
+task: Failed to run task "gates:deterministic": exit status 1

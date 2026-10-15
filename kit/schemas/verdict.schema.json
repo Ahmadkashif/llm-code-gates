@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ahmadkashif/llm-code-gates/schemas/verdict.schema.json",
+  "title": "llm-code-gates verifier output",
+  "description": "Output of verify-finding.md (v2). The harness forces 'refuted' when evidence_in_shown_code or scenario_traced is false, or already_prevented is true; intent may refute only correctness/scope findings; final severity = min(finder, verifier).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "checks",
+    "verdict",
+    "confidence",
+    "reason"
+  ],
+  "properties": {
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_in_shown_code",
+        "scenario_traced",
+        "already_prevented",
+        "requested_by_task"
+      ],
+      "properties": {
+        "evidence_in_shown_code": {
+          "type": "boolean"
+        },
+        "scenario_traced": {
+          "type": "boolean",
+          "description": "you followed the input through the shown lines to the wrong result yourself"
+        },
+        "already_prevented": {
+          "type": "boolean",
+          "description": "a guard/validation/test in the shown code prevents the scenario"
+        },
+        "requested_by_task": {
+          "type": "boolean",
+          "description": "the flagged behaviour is exactly what the task statement asks for"
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "refuted",
+        "uncertain"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 600
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# published quick start, run from the staged public tree (copied out with cp -rL, git init)
+render --check: OK
+clean tree: task check:fast rc=0
+applied D04.patch (weakened assertions)
+   [BLOCK] test-integrity.assertion-weakened (high) tests/test_pricing.py:31 — test test_quote_zone_and_rounding: strong assertions 4 -> 3, weak 0 -> 1
+=== gates:fast FAILED: test-tamper in 2.23s [test-tamper 0.16s rc=1] [dep-check 0.29s rc=0] [semgrep-changed 1.63s rc=0] [scope-check 0.16s rc=0]
+task: Failed to run task "check:fast": task: Failed to run task "gates:fast": exit status 1

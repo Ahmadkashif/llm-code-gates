@@ -1,0 +1,53 @@
+From 6b7f1f2e0e4d6787b48bdfb28a2676d01a5af156 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] C03: Trim whitespace around promo codes before validating
+ them.
+
+---
+ .gates/task.md           | 5 +++++
+ quotesvc/validation.py   | 2 ++
+ tests/test_validation.py | 5 +++++
+ 3 files changed, 12 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..3c093b5
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C03)
++
++Trim whitespace around promo codes before validating them.
++
++Scope: quotesvc/validation.py, tests/test_validation.py
+diff --git a/quotesvc/validation.py b/quotesvc/validation.py
+index 15144b3..deee78d 100644
+--- a/quotesvc/validation.py
++++ b/quotesvc/validation.py
+@@ -31,6 +31,8 @@ def parse_request(body: Any) -> dict:
+     if isinstance(quantity, bool) or not isinstance(quantity, int) or not 1 <= quantity <= MAX_QUANTITY:
+         raise ValidationError("quantity", f"must be an integer in [1, {MAX_QUANTITY}]")
+     promo = body.get("promo")
++    if isinstance(promo, str):
++        promo = promo.strip() or None
+     if promo is not None and (not isinstance(promo, str) or len(promo) > 32):
+         raise ValidationError("promo", "must be a short string")
+     return {"weight_kg": weight, "zone": zone, "quantity": quantity, "promo": promo.upper() if promo else None}
+diff --git a/tests/test_validation.py b/tests/test_validation.py
+index 43411fa..6daa411 100644
+--- a/tests/test_validation.py
++++ b/tests/test_validation.py
+@@ -31,3 +31,8 @@ def test_invalid_requests(body, field):
+     with pytest.raises(ValidationError) as e:
+         parse_request(body)
+     assert e.value.field == field
++
++
++def test_promo_is_trimmed():
++    assert parse_request({"weight_kg": 1, "zone": "eu", "promo": "  bulk5 "})["promo"] == "BULK5"
++    assert parse_request({"weight_kg": 1, "zone": "eu", "promo": "   "})["promo"] is None
+-- 
+2.43.0
+

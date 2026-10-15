@@ -1,0 +1,256 @@
+{
+ "id": "D07",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.42
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 21.68
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 19.11
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 2.77,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 1,
+     "wall_s": 1.9,
+     "findings": [
+      {
+       "rule": "gates.py.sql-string-formatting",
+       "category": "security",
+       "level": "block",
+       "severity": "high",
+       "path": "quotesvc/store.py",
+       "line": 36,
+       "suppressed": false,
+       "fingerprint": "dda346f6a0b8c1c5"
+      }
+     ]
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.06,
+     "findings": []
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 9.69,
+   "checks": {
+    "test-tamper": {
+     "rc": 0,
+     "wall_s": 0.34,
+     "findings": []
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.25,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 1,
+     "wall_s": 1.98,
+     "findings": [
+      {
+       "rule": "gates.py.sql-string-formatting",
+       "category": "security",
+       "level": "block",
+       "severity": "high",
+       "path": "quotesvc/store.py",
+       "line": 36,
+       "suppressed": false,
+       "fingerprint": "dda346f6a0b8c1c5"
+      }
+     ]
+    },
+    "scope-check": {
+     "rc": 0,
+     "wall_s": 0.07,
+     "findings": []
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.12,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.28,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 6.51,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 15.8,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 15.62,
+     "findings": [
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/store.py",
+       "line": 37,
+       "suppressed": false,
+       "fingerprint": "568444df5334f30b"
+      },
+      {
+       "rule": "test-adequacy.surviving-mutant",
+       "category": "test-adequacy",
+       "level": "inform",
+       "severity": "low",
+       "path": "quotesvc/store.py",
+       "line": 37,
+       "suppressed": false,
+       "fingerprint": "99b1f1aed1738923"
+      }
+     ]
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.08,
+     "findings": [
+      {
+       "rule": "llm.security",
+       "category": "security",
+       "level": "warn",
+       "severity": "high",
+       "path": "quotesvc/store.py",
+       "line": 36,
+       "suppressed": false,
+       "fingerprint": "d8359d1b01247c8e"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.62
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 1.27
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.21
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 0.97
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.05
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 1.52
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.77
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.22,
+   "findings": [
+    {
+     "rule": "llm.security",
+     "category": "security",
+     "level": "warn",
+     "severity": "high",
+     "path": "quotesvc/store.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "d8359d1b01247c8e"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.11,
+   "findings": [
+    {
+     "rule": "llm.security",
+     "category": "security",
+     "level": "warn",
+     "severity": "high",
+     "path": "quotesvc/store.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "d8359d1b01247c8e"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "refuted"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.31,
+   "findings": [
+    {
+     "rule": "llm.security",
+     "category": "security",
+     "level": "warn",
+     "severity": "high",
+     "path": "quotesvc/store.py",
+     "line": 36,
+     "suppressed": false,
+     "fingerprint": "d8359d1b01247c8e"
+    }
+   ],
+   "calls": 14,
+   "decisions": [
+    "refuted"
+   ]
+  }
+ ]
+}

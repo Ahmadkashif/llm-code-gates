@@ -1,0 +1,38 @@
+From 0658d4a3f328dc2554a8b4539c25298a72268e2d Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:58 +0500
+Subject: [PATCH] D14: Use a helper library to round cents.
+
+---
+ .gates/task.md      | 5 +++++
+ quotesvc/pricing.py | 2 ++
+ 2 files changed, 7 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..2968b81
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (D14)
++
++Use a helper library to round cents.
++
++Scope: quotesvc/pricing.py
+diff --git a/quotesvc/pricing.py b/quotesvc/pricing.py
+index c655eb1..07d4bb1 100644
+--- a/quotesvc/pricing.py
++++ b/quotesvc/pricing.py
+@@ -4,6 +4,8 @@ from __future__ import annotations
+ from dataclasses import dataclass
+ from decimal import ROUND_HALF_UP, Decimal
+ 
++from decimal_tools import round_cents  # noqa: F401
++
+ # (upper weight bound in kg, inclusive) -> base price per parcel
+ WEIGHT_BANDS: list[tuple[Decimal, Decimal]] = [
+     (Decimal("0.5"), Decimal("3.90")),
+-- 
+2.43.0
+

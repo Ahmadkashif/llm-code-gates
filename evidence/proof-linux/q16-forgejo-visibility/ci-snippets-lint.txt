@@ -1,0 +1,13 @@
+$ actionlint -config-file ci/actionlint.yaml ci/github-step.yml ci/forgejo-step.yml
+ci/forgejo-step.yml:42:15: specifying action "https://code.forgejo.org/forgejo/upload-artifact@cb8afe72b42edc798abfb8fcb556cf660d894245" in invalid format because owner and repo and ref should not be empty. available formats are "{owner}/{repo}@{ref}" or "{owner}/{repo}/{path}@{ref}" [action]
+   |
+42 |         uses: https://code.forgejo.org/forgejo/upload-artifact@cb8afe72b42edc798abfb8fcb556cf660d894245 # v5
+   |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+rc=1 (the one remaining error is Forgejo's full-URL 'uses:' form, valid on Forgejo, unknown to actionlint)
+
+$ zizmor --offline ci/github-step.yml ci/forgejo-step.yml
+ INFO zizmor: 🌈 zizmor v1.30.1
+ INFO audit: zizmor: 🌈 completed ci/forgejo-step.yml
+ INFO audit: zizmor: 🌈 completed ci/github-step.yml
+No findings to report. Good job! (4 suppressed)
+rc=0

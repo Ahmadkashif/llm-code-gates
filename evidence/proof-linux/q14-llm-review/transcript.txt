@@ -1,0 +1,72 @@
+# Q14: llm_review against an OpenAI-compatible endpoint (a LOCAL MOCK on 127.0.0.1 answered by the stub judge — protocol/pipeline proof, NOT model quality)
+# mock faults: first request HTTP 503, every reply wrapped in a qwen3-style <think> block, every 4th reply not JSON, Bearer key required
+# change set: cs/D07 (SQL built with an f-string), BASE_REF=main
+
+$ GATES_JUDGE_BASE_URL=http://127.0.0.1:18931/v1 GATES_JUDGE_MODEL=mock-model GATES_JUDGE_API_KEY=<redacted> python3 gates/review/llm_review.py --base main --judge gates/profiles/judges/local-48gb-plus.yml
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "local-48gb-plus", "files": 2, "chunks": 1, "model": "mock-model", "calls": 18, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.64}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: advisory only (profile 'local-48gb-plus', blocking categories: none) — exit 0
+exit=0
+
+$ jq -c 'select(.event=="call") | {prompt, sample, chunk, parse_ok, repaired, repair_ok, schema_errors}' .gates/out/llm-review.events.jsonl
+{"prompt":"find-correctness","sample":0,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.006}
+{"prompt":"find-correctness","sample":1,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-correctness","sample":2,"chunk":0,"parse_ok":false,"repaired":true,"repair_ok":true,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-security","sample":0,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.007}
+{"prompt":"find-security","sample":1,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-security","sample":2,"chunk":0,"parse_ok":false,"repaired":true,"repair_ok":true,"schema_errors":[],"latency_s":0.005}
+{"prompt":"find-test-integrity","sample":0,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.006}
+{"prompt":"find-test-integrity","sample":1,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-test-integrity","sample":2,"chunk":0,"parse_ok":false,"repaired":true,"repair_ok":true,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-test-adequacy","sample":0,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.005}
+{"prompt":"find-test-adequacy","sample":1,"chunk":0,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.004}
+{"prompt":"find-test-adequacy","sample":2,"chunk":0,"parse_ok":false,"repaired":true,"repair_ok":true,"schema_errors":[],"latency_s":0.004}
+{"prompt":"verify-finding","sample":null,"chunk":null,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.005}
+{"prompt":"verify-finding","sample":null,"chunk":null,"parse_ok":true,"repaired":null,"repair_ok":null,"schema_errors":[],"latency_s":0.004}
+$ jq -c 'select(.event=="decision") | {stage, prompt, category, why}' .gates/out/llm-review.events.jsonl
+{"stage":"refuted","prompt":"find-correctness","category":"correctness","why":"no concrete failing scenario"}
+$ run record (provenance: profile, model, prompt version + sha256)
+{"profile":"local-48gb-plus","model":"mock-model","prompts":{"find-correctness":{"version":"2","sha256":"6f079857058548e5"},"find-security":{"version":"2","sha256":"8a206eb5370f2eed"},"find-test-integrity":{"version":"2","sha256":"ab5d396460415f8d"},"find-test-adequacy":{"version":"2","sha256":"24a4f338eccd118b"},"find-scope":{"version":"2","sha256":"f48d8b4f813d551d"}}}
+
+$ cat .gates/out/llm-review.md
+## LLM review (advisory) — profile `local-48gb-plus`
+
+Model: `mock-model` · calls: 18 · raw findings: 6 → reported: 1 · blocking categories: none
+
+| level | severity | category | location | finding | conf |
+|---|---|---|---|---|---|
+| warn | high | security | `quotesvc/store.py:36` | SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used | 0.8 |
+
+> note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+
+_LLM findings are advisory: they can be wrong. A category blocks only after its measured precision is >= 90% on labelled data (see the kit README)._
+$ SARIF results:
+{"ruleId":"llm.security","level":"warning","loc":{"artifactLocation":{"uri":"quotesvc/store.py"},"region":{"startLine":36}}}
+
+# key hygiene: occurrences of the key value in every output file
+occurrences of the key in .gates/out: 0
+
+# same endpoint, the small-tier profile (local-8gb: review-single-pass only, no verifier -> warn at most)
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "local-8gb", "files": 2, "chunks": 1, "model": "mock-model", "calls": 2, "raw": 1, "grounded": 1, "after_votes": 1, "after_dedup": 1, "reported": 1, "baselined": 0, "wall_s": 0.07}
+   [WARN] llm.correctness (medium) quotesvc/store.py:34 — possible edge case not handled — Some unusual input might behave unexpectedly here.
+llm-review: advisory only (profile 'local-8gb', blocking categories: none) — exit 0
+exit=0
+
+# promoted category: a copy of local-48gb-plus with blocking_categories: [security] -> exit 1
+== gates/llm-review: 1 finding(s), 1 blocking | {"profile": "local-48gb-plus", "files": 2, "chunks": 1, "model": "mock-model", "calls": 18, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.14}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [BLOCK] llm.security (high) quotesvc/store.py:36 — SQL built by string formatting — Input/state: attacker-controlled value -> executes line 36 -> actual: CWE-89 -> expected: the safe API is used
+llm-review: BLOCKING — categories promoted by profile 'local-48gb-plus': ['security']
+exit=1
+
+# wrong key -> HTTP 401 -> 'review unavailable', advisory exits 0
+   note: REVIEW UNAVAILABLE: HTTP 401
+llm-review: unavailable; advisory gate exits 0
+exit=0
+
+# endpoint down -> advisory exits 0
+[1]+  Terminated              python3 gates/review/mock_openai_server.py --port 18931 --fail-first 1 --think --garbage-every 4 --require-key MOCK_KEY_ENV > /dev/null 2>&1
+   note: REVIEW UNAVAILABLE: judge unavailable after 3 attempts: URLError: <urlopen error [Errno 111] Connection refused>
+llm-review: unavailable; advisory gate exits 0
+exit=0

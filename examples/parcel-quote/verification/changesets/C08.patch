@@ -1,0 +1,53 @@
+From 339c78e40c3fa9462162c5e2b1523fcbc61fff6c Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C08: Log validation failures (field only, no body).
+
+---
+ .gates/task.md  | 5 +++++
+ quotesvc/app.py | 3 +++
+ 2 files changed, 8 insertions(+)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..1da0475
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C08)
++
++Log validation failures (field only, no body).
++
++Scope: quotesvc/app.py
+diff --git a/quotesvc/app.py b/quotesvc/app.py
+index ba770c4..5740977 100644
+--- a/quotesvc/app.py
++++ b/quotesvc/app.py
+@@ -2,6 +2,7 @@
+ from __future__ import annotations
+ 
+ import json
++import logging
+ import os
+ import re
+ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+@@ -12,6 +13,7 @@ from .store import QuoteStore
+ from .validation import ValidationError, parse_request
+ 
+ MAX_BODY = 4096
++log = logging.getLogger("parcel-quote")
+ QUOTE_PATH = re.compile(r"^/v1/quote/([0-9a-f]{32})$")
+ 
+ 
+@@ -53,6 +55,7 @@ def make_handler(store: QuoteStore, limiter: TokenBucket):
+             except json.JSONDecodeError:
+                 return self._send(400, {"error": "invalid JSON"})
+             except ValidationError as e:
++                log.info("rejected quote: field=%s", e.field)
+                 return self._send(422, {"error": str(e), "field": e.field})
+             except PricingError as e:
+                 return self._send(422, {"error": str(e)})
+-- 
+2.43.0
+

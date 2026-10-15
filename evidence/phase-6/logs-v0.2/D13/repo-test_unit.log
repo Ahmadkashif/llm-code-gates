@@ -1,0 +1,4 @@
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.42s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null

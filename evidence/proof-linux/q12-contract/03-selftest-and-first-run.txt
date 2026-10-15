@@ -1,0 +1,76 @@
+# Earlier attempts (kept in phase-6/log.md): (1) [lint] failed — repo ruff linted the vendored kit -> README step 4 exclusion; (2) gates:deterministic scanned the vendored kit itself (copyleft regex in licence_check.py, kit Docker locks) -> kit now skips gates/ and .gates/ (gateslib.skipped).
+
+$ task gates:selftest
+task: [gates:selftest] python3 -m unittest discover -s gates/tests -t gates -q
+/usr/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed <socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 54731)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed <socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 48767)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+----------------------------------------------------------------------
+Ran 27 tests in 72.571s
+
+OK
+
+real	1m12.876s
+user	1m3.464s
+sys	0m12.124s
+rc=0
+
+$ task check BASE_REF=main   (kit installed, not yet committed)
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 6 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.37s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: [build] python3 -m compileall -q quotesvc
+task: [secrets] gitleaks git --redact --no-banner --log-opts='main..HEAD'
+[90m1:10PM[0m [32mINF[0m [1m0 commits scanned.[0m
+[90m1:10PM[0m [32mINF[0m [1mscanned ~0 bytes (0) in 217ms[0m
+[90m1:10PM[0m [32mINF[0m [1mno leaks found[0m
+task: [audit] osv-scanner scan source --lockfile requirements.txt:requirements-dev.txt
+Starting filesystem walk for root: /
+Scanned <research>/sample-service/requirements-dev.txt file and found 6 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 104.146µs elapsed, 104.198µs wall time
+
+No issues found
+task: [sast] semgrep scan --config .semgrep/ --error --metrics=off --quiet --disable-version-check --exclude gates
+task: [workflows] actionlint -config-file .github/actionlint.yaml .forgejo/workflows/*.yml
+task: [workflows] zizmor --offline .forgejo/workflows/*.yml
+ INFO zizmor: 🌈 zizmor v1.30.1
+ INFO audit: zizmor: 🌈 completed .forgejo/workflows/pipeline.yml
+No findings to report. Good job! (2 suppressed)
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/sample-service/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "a846a5949b17", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/sample-service/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "a846a5949b17", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:deterministic -> semgrep: <research>/sample-service/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "a846a5949b17", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/sample-service/gates/checks/scope_check.py --base main
+== gates/scope-check: 1 finding(s), 0 blocking | {"base": "a846a5949b17", "files": 2, "lines": 10, "scope": []}
+   [INFORM] scope.undeclared (info)  — no task scope declared (GATES_SCOPE or Scope: in the task file); size heuristic only
+
+--- gates:deterministic -> licence-check: <research>/sample-service/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "a846a5949b17"}
+
+--- gates:deterministic -> dup-check: <research>/sample-service/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "a846a5949b17", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/sample-service/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 0 finding(s), 0 blocking | {"base": "a846a5949b17", "head_pct": 95.91, "base_pct": 95.91}
+
+=== gates:deterministic passed in 10.04s [test-tamper 0.2s rc=0] [dep-check 0.26s rc=0] [semgrep 2.18s rc=0] [scope-check 0.05s rc=0] [licence-check 0.12s rc=0] [dup-check 0.33s rc=0] [coverage-drop 6.91s rc=0]
+
+real	0m22.999s
+user	0m9.574s
+sys	0m1.360s
+rc=0

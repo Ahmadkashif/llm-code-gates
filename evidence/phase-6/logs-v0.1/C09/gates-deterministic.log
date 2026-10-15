@@ -1,0 +1,24 @@
+task: [gates:deterministic] python3 gates/run.py deterministic --base main
+
+--- gates:deterministic -> test-tamper: <research>/phase-6/wt/C09/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 0}
+
+--- gates:deterministic -> dep-check: <research>/phase-6/wt/C09/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:deterministic -> semgrep: <research>/phase-6/wt/C09/gates/checks/semgrep_gate.py --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "targets": 1, "rules": 0}
+
+--- gates:deterministic -> scope-check: <research>/phase-6/wt/C09/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 1, "lines": 8, "scope": ["quotesvc/app.py"]}
+
+--- gates:deterministic -> licence-check: <research>/phase-6/wt/C09/gates/checks/licence_check.py --base main
+== gates/licence-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed"}
+
+--- gates:deterministic -> dup-check: <research>/phase-6/wt/C09/gates/checks/dup_check.py --base main
+== gates/dup-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files_indexed": 6, "window": 6}
+
+--- gates:deterministic -> coverage-drop: <research>/phase-6/wt/C09/gates/checks/coverage_drop.py --base main
+== gates/coverage-drop: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "head_pct": 95.91, "base_pct": 95.91}
+
+=== gates:deterministic passed in 10.61s [test-tamper 0.42s rc=0] [dep-check 0.33s rc=0] [semgrep 2.01s rc=0] [scope-check 0.29s rc=0] [licence-check 0.27s rc=0] [dup-check 0.22s rc=0] [coverage-drop 7.07s rc=0]

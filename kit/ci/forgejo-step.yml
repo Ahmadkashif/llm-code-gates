@@ -1,0 +1,63 @@
+# llm-code-gates for the Forgejo ci lane (#3 self-hosted-cicd). The checks themselves live in the Taskfile
+# (`task ci` already runs gates:deterministic via `check` and gates:server via `ci`); this file only adds the two
+# reporting steps. Copy the two steps marked >>> into .forgejo/workflows/pipeline.yml, job `ci`, after `task ci`.
+# Complete here so actionlint/zizmor can lint it.
+#
+# Secret conflict (#3: "the ci lane holds no secrets"): the DEFAULT below is option (c) — the ci lane runs the
+# judge profile rendered into .gates/judge.json, which should be `stub` or a keyless endpoint; a real LLM review
+# runs on the developer machine at L2 (`task gates:llm-review`). Options (a) and (b) are sketched at the bottom;
+# the user decides (see research phase-4/synthesis.md §5).
+#
+# Forgejo facts (verified 2026-10-15): advisory steps must exit 0 themselves (job-level continue-on-error and
+# `permissions:` are ignored); upstream actions/upload-artifact v4+ fails on Forgejo, use Forgejo's fork; job
+# summaries ($FORGEJO_STEP_SUMMARY) need Forgejo >= v17.0 + Runner >= 13.2 — the review also prints to the log.
+name: pipeline-gates-example
+
+on:
+  pull_request:
+
+permissions:        # ignored by Forgejo (verified); kept so the same file is least-privilege on GitHub and zizmor-clean
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ci
+    timeout-minutes: 30
+    env:
+      BASE_REF: origin/${{ github.base_ref || 'main' }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: task ci (deterministic gates block; LLM review is advisory and exits 0)
+        run: task ci BASE_REF="$BASE_REF"
+      # >>> 1. human-readable advisory report in the job log (always visible, no token needed)
+      - name: gates report (advisory)
+        if: ${{ !cancelled() }}
+        run: task gates:report || true
+      # >>> 2. machine-readable reports as a run artifact (JSONL + SARIF + markdown)
+      - name: upload gates reports
+        if: ${{ !cancelled() }}
+        uses: https://code.forgejo.org/forgejo/upload-artifact@cb8afe72b42edc798abfb8fcb556cf660d894245 # v5
+        with:
+          name: gates-reports
+          path: .gates/out/
+          retention-days: 14
+
+# Option (b) — a separate `review` lane (own runner registration, egress only to the gateway, a low-value
+# review-only key as a repo secret visible to that lane only). Never a required check.
+#  review:
+#    runs-on: review
+#    needs: [ci]
+#    if: github.event_name == 'pull_request'
+#    steps:
+#      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+#        with: {fetch-depth: 0, persist-credentials: false}
+#      - name: advisory LLM review (exits 0 by itself)
+#        env:
+#          GATES_JUDGE_API_KEY: ${{ secrets.GATES_REVIEW_KEY }}
+#        run: python3 gates/render.py --stack python --judge local-8gb && task gates:llm-review BASE_REF="origin/${{ github.base_ref }}"
+#
+# Option (a) — the same env line inside the `ci` job: simplest, but it breaks #3's "no secrets in the ci lane"
+# rule; any PR branch can read the key. Only for a rate-limited, review-only, low-value key.

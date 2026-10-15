@@ -1,0 +1,59 @@
+From db6edf2f6470ea56bb67360365c56137b9f26058 Mon Sep 17 00:00:00 2001
+From: sample <sample@example.invalid>
+Date: Thu, 15 Oct 2026 13:12:59 +0500
+Subject: [PATCH] C10: Give the parsed request a TypedDict.
+
+---
+ .gates/task.md         |  5 +++++
+ quotesvc/validation.py | 11 +++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+ create mode 100644 .gates/task.md
+
+diff --git a/.gates/task.md b/.gates/task.md
+new file mode 100644
+index 0000000..5b8d88f
+--- /dev/null
++++ b/.gates/task.md
+@@ -0,0 +1,5 @@
++# Task (C10)
++
++Give the parsed request a TypedDict.
++
++Scope: quotesvc/validation.py
+diff --git a/quotesvc/validation.py b/quotesvc/validation.py
+index 15144b3..5729364 100644
+--- a/quotesvc/validation.py
++++ b/quotesvc/validation.py
+@@ -2,20 +2,27 @@
+ from __future__ import annotations
+ 
+ from decimal import Decimal, InvalidOperation
+-from typing import Any
++from typing import Any, TypedDict
+ 
+ from .pricing import MAX_WEIGHT_KG, ZONE_MULTIPLIER
+ 
+ MAX_QUANTITY = 500
+ 
+ 
++class QuoteRequest(TypedDict):
++    weight_kg: Decimal
++    zone: str
++    quantity: int
++    promo: str | None
++
++
+ class ValidationError(ValueError):
+     def __init__(self, field: str, message: str):
+         super().__init__(f"{field}: {message}")
+         self.field = field
+ 
+ 
+-def parse_request(body: Any) -> dict:
++def parse_request(body: Any) -> QuoteRequest:
+     if not isinstance(body, dict):
+         raise ValidationError("body", "must be a JSON object")
+     try:
+-- 
+2.43.0
+

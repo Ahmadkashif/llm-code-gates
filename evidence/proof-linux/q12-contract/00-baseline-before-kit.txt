@@ -1,0 +1,79 @@
+++ task check:fast BASE_REF=main
+task: [check:fast] [ -z "" ] || python3 -m ruff check 
+task: [check:fast] python3 -m pytest -x -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.20s
+
+real	0m0.854s
+user	0m0.812s
+sys	0m0.097s
+++ task check BASE_REF=main
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 6 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.39s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: [build] python3 -m compileall -q quotesvc
+task: [secrets] gitleaks git --redact --no-banner --log-opts='main..HEAD'
+[90m12:58PM[0m [32mINF[0m [1m0 commits scanned.[0m
+[90m12:58PM[0m [32mINF[0m [1mscanned ~0 bytes (0) in 339ms[0m
+[90m12:58PM[0m [32mINF[0m [1mno leaks found[0m
+task: [audit] osv-scanner scan source --lockfile requirements.txt:requirements-dev.txt
+Starting filesystem walk for root: /
+Scanned <research>/sample-service/requirements-dev.txt file and found 6 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 120.444µs elapsed, 120.507µs wall time
+
+No issues found
+task: [sast] semgrep scan --config .semgrep/ --error --metrics=off --quiet --disable-version-check --exclude gates
+task: [workflows] actionlint -config-file .github/actionlint.yaml .forgejo/workflows/*.yml
+task: [workflows] zizmor --offline .forgejo/workflows/*.yml
+ INFO zizmor: 🌈 zizmor v1.30.1
+ INFO audit: zizmor: 🌈 completed .forgejo/workflows/pipeline.yml
+No findings to report. Good job! (2 suppressed)
+
+real	0m11.864s
+user	0m3.640s
+sys	0m0.451s
+++ SKIP_IMAGE=1
+++ task ci BASE_REF=main
+task: [lint] python3 -m ruff check .
+All checks passed!
+task: [typecheck] python3 -m mypy quotesvc
+Success: no issues found in 6 source files
+task: [test:unit] python3 -m coverage run -m pytest -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.37s
+task: [test:unit] python3 -m coverage report --fail-under=75 > /dev/null
+task: [build] python3 -m compileall -q quotesvc
+task: [secrets] gitleaks git --redact --no-banner --log-opts='main..HEAD'
+[90m12:58PM[0m [32mINF[0m [1m0 commits scanned.[0m
+[90m12:58PM[0m [32mINF[0m [1mscanned ~0 bytes (0) in 366ms[0m
+[90m12:58PM[0m [32mINF[0m [1mno leaks found[0m
+task: [audit] osv-scanner scan source --lockfile requirements.txt:requirements-dev.txt
+Starting filesystem walk for root: /
+Scanned <research>/sample-service/requirements-dev.txt file and found 6 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 88.084µs elapsed, 88.133µs wall time
+
+No issues found
+task: [sast] semgrep scan --config .semgrep/ --error --metrics=off --quiet --disable-version-check --exclude gates
+task: [workflows] actionlint -config-file .github/actionlint.yaml .forgejo/workflows/*.yml
+task: [workflows] zizmor --offline .forgejo/workflows/*.yml
+ INFO zizmor: 🌈 zizmor v1.30.1
+ INFO audit: zizmor: 🌈 completed .forgejo/workflows/pipeline.yml
+No findings to report. Good job! (2 suppressed)
+task: [test:integration] python3 -m pytest -m integration
+....                                                                     [100%]
+4 passed, 25 deselected in 2.24s
+task: [image] if [ "${SKIP_IMAGE:-0}" = "1" ]; then echo "image: SKIPPED (SKIP_IMAGE=1; live Docker build not approved in this environment)"; exit 0; fi
+docker buildx build --pull --load -t parcel-quote:ci .
+syft parcel-quote:ci -o spdx-json=sbom.spdx.json
+grype parcel-quote:ci --fail-on high
+
+image: SKIPPED (SKIP_IMAGE=1; live Docker build not approved in this environment)
+
+real	0m14.444s
+user	0m4.647s
+sys	0m0.539s

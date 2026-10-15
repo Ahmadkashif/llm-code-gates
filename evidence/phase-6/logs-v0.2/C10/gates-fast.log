@@ -1,0 +1,15 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/C10/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/C10/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/C10/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 1, "lines": 16, "scope": ["quotesvc/validation.py"]}
+
+=== gates:fast passed in 2.71s [test-tamper 0.2s rc=0] [dep-check 0.33s rc=0] [semgrep-changed 2.13s rc=0] [scope-check 0.06s rc=0]

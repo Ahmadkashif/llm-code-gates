@@ -1,0 +1,219 @@
+{
+ "id": "D16",
+ "contract": {
+  "check:fast": {
+   "rc": 201,
+   "wall_s": 3.27
+  },
+  "check": {
+   "rc": 201,
+   "wall_s": 23.65
+  },
+  "ci": {
+   "rc": 201,
+   "wall_s": 22.69
+  }
+ },
+ "gates": {
+  "fast": {
+   "rc": 201,
+   "wall_s": 3.33,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.4,
+     "findings": [
+      {
+       "rule": "test-integrity.test-config-weakened",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "pyproject.toml",
+       "line": 9,
+       "suppressed": false,
+       "fingerprint": "9bc42b2d0a554afe"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.31,
+     "findings": []
+    },
+    "semgrep-changed": {
+     "rc": 0,
+     "wall_s": 2.04,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 1,
+     "wall_s": 0.11,
+     "findings": [
+      {
+       "rule": "scope.out-of-scope-file",
+       "category": "scope",
+       "level": "block",
+       "severity": "medium",
+       "path": "pyproject.toml",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "d9ec7d5e2f5acf32"
+      }
+     ]
+    }
+   }
+  },
+  "deterministic": {
+   "rc": 201,
+   "wall_s": 10.3,
+   "checks": {
+    "test-tamper": {
+     "rc": 1,
+     "wall_s": 0.28,
+     "findings": [
+      {
+       "rule": "test-integrity.test-config-weakened",
+       "category": "test-integrity",
+       "level": "block",
+       "severity": "high",
+       "path": "pyproject.toml",
+       "line": 9,
+       "suppressed": false,
+       "fingerprint": "9bc42b2d0a554afe"
+      }
+     ]
+    },
+    "dep-check": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": []
+    },
+    "semgrep": {
+     "rc": 0,
+     "wall_s": 2.06,
+     "findings": []
+    },
+    "scope-check": {
+     "rc": 1,
+     "wall_s": 0.1,
+     "findings": [
+      {
+       "rule": "scope.out-of-scope-file",
+       "category": "scope",
+       "level": "block",
+       "severity": "medium",
+       "path": "pyproject.toml",
+       "line": 0,
+       "suppressed": false,
+       "fingerprint": "d9ec7d5e2f5acf32"
+      }
+     ]
+    },
+    "licence-check": {
+     "rc": 0,
+     "wall_s": 0.33,
+     "findings": []
+    },
+    "dup-check": {
+     "rc": 0,
+     "wall_s": 0.14,
+     "findings": []
+    },
+    "coverage-drop": {
+     "rc": 0,
+     "wall_s": 6.92,
+     "findings": []
+    }
+   }
+  },
+  "server": {
+   "rc": 0,
+   "wall_s": 5.64,
+   "checks": {
+    "diff-mutation": {
+     "rc": 0,
+     "wall_s": 4.84,
+     "findings": []
+    },
+    "llm-review": {
+     "rc": 0,
+     "wall_s": 0.3,
+     "findings": []
+    }
+   }
+  }
+ },
+ "repo": {
+  "lint": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "typecheck": {
+   "rc": 0,
+   "wall_s": 0.57
+  },
+  "test:unit": {
+   "rc": 0,
+   "wall_s": 0.92
+  },
+  "build": {
+   "rc": 0,
+   "wall_s": 0.11
+  },
+  "secrets": {
+   "rc": 0,
+   "wall_s": 1.17
+  },
+  "audit": {
+   "rc": 0,
+   "wall_s": 8.8
+  },
+  "sast": {
+   "rc": 0,
+   "wall_s": 2.17
+  },
+  "workflows": {
+   "rc": 0,
+   "wall_s": 0.16
+  },
+  "test:integration": {
+   "rc": 0,
+   "wall_s": 2.78
+  }
+ },
+ "review": [
+  {
+   "rc": 0,
+   "wall_s": 0.32,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.26,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  },
+  {
+   "rc": 0,
+   "wall_s": 0.37,
+   "findings": [],
+   "calls": 12,
+   "decisions": [
+    "ungrounded",
+    "ungrounded",
+    "ungrounded"
+   ]
+  }
+ ]
+}

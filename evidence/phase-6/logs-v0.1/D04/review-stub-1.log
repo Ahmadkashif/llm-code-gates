@@ -1,0 +1,4 @@
+== gates/llm-review: 1 finding(s), 0 blocking | {"profile": "stub", "files": 2, "chunks": 1, "model": "stub-judge", "calls": 14, "raw": 6, "grounded": 6, "after_votes": 2, "after_dedup": 2, "reported": 1, "baselined": 0, "wall_s": 0.07}
+   note: find-scope skipped: task text not marked human-authored (GATES_TASK_TRUSTED=1)
+   [WARN] llm.test-adequacy (medium) tests/test_pricing.py:36 — assertion only checks the value is not None — Input/state: code under test returns a wrong value -> executes line 36 -> actual: test passes -> expected: test fails
+llm-review: advisory only (profile 'stub', blocking categories: none) — exit 0

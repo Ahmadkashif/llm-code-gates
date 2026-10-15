@@ -1,0 +1,20 @@
+task: [check:fast] [ -z "scripts/smoke.py " ] || python3 -m ruff check scripts/smoke.py 
+All checks passed!
+task: [check:fast] python3 -m pytest -x -m "not integration"
+.........................                                                [100%]
+25 passed, 4 deselected in 0.24s
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/C07/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "890f7797c930", "test_files_compared": 0}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/C07/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "deps_checked": 1, "registry_lookups": 1, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 0 finding(s), 0 blocking | {"base": "890f7797c930", "targets": 1, "rules": 0}
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/C07/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "890f7797c930", "files": 2, "lines": 20, "scope": ["scripts/smoke.py", "requirements-dev.txt"]}
+
+=== gates:fast passed in 3.97s [test-tamper 0.24s rc=0] [dep-check 1.29s rc=0] [semgrep-changed 2.36s rc=0] [scope-check 0.09s rc=0]

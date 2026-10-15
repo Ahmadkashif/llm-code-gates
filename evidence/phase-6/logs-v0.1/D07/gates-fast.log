@@ -1,0 +1,17 @@
+task: [gates:fast] python3 gates/run.py fast --base main
+
+--- gates:fast -> test-tamper: <research>/phase-6/wt/D07/gates/checks/test_tamper.py --base main
+== gates/test-tamper: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "test_files_compared": 1}
+
+--- gates:fast -> dep-check: <research>/phase-6/wt/D07/gates/checks/dep_check.py --base main
+== gates/dep-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "deps_checked": 0, "registry_lookups": 0, "min_age_days": 30.0}
+
+--- gates:fast -> semgrep-changed: --changed --base main
+== gates/semgrep: 1 finding(s), 1 blocking | {"base": "370a061fc5ed", "targets": 2, "rules": 1}
+   [BLOCK] gates.py.sql-string-formatting (high) quotesvc/store.py:36 — SQL built with string formatting/concatenation. Use parameter placeholders.
+
+--- gates:fast -> scope-check: <research>/phase-6/wt/D07/gates/checks/scope_check.py --base main
+== gates/scope-check: 0 finding(s), 0 blocking | {"base": "370a061fc5ed", "files": 2, "lines": 17, "scope": ["quotesvc/store.py", "tests/test_store.py"]}
+
+=== gates:fast FAILED: semgrep-changed in 2.64s [test-tamper 0.34s rc=0] [dep-check 0.34s rc=0] [semgrep-changed 1.9s rc=1] [scope-check 0.06s rc=0]
+task: Failed to run task "gates:fast": exit status 1

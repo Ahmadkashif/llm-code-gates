@@ -1,0 +1,19 @@
+# Go stack. TEMPLATE ONLY: NOT VERIFIED in this research. gremlins supports --diff <ref> natively.
+name: go
+verified: false
+detect: [go.mod]
+ecosystem: go
+tools:
+  go: "1.24"
+  semgrep: "1.178.0"
+  gremlins: "0.6.0"
+env:
+  GATES_TEST_CMD: go test -short -count=1 ./...
+  GATES_COVERAGE_CMD: ""                  # use go test -coverprofile + a threshold task in the repo Taskfile
+  GATES_MUTATION_CMD: gremlins unleash --diff "$BASE_REF" --threshold-efficacy 60
+  GATES_DEP_MIN_AGE_DAYS: "30"
+  GATES_DEP_COOLDOWN_DAYS: "7"
+checks:
+  fast: [test-tamper, dep-check, semgrep-changed, scope-check]
+  deterministic: [test-tamper, dep-check, semgrep, scope-check, licence-check, dup-check]
+  server: [diff-mutation, llm-review]
